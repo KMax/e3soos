@@ -9,6 +9,5 @@
     <relativePath>../ru.ailab.e3soos</relativePath>
   </parent>
   <artifactId>ru.ailab.e3soos.feature</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
 </project>

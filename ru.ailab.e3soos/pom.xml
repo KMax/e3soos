@@ -5,6 +5,9 @@
 	<artifactId>parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
+	<prerequisites>
+	 <maven>3.0</maven>
+	</prerequisites>
 	<build>
 		<plugins>
 			<plugin>
@@ -18,13 +21,23 @@
 				<artifactId>target-platform-configuration</artifactId>
 				<version>0.13.0</version>
 				<configuration>
-					<environments>
-						<environment>
-							<os>linux</os>
-							<ws>gtk</ws>
-							<arch>x86</arch>
-						</environment>
-					</environments>
+				  <resolver>p2</resolver>
+				  <pomDependencies>consider</pomDependencies>
+				  <target>
+				    <artifact>
+				      <groupId>ru.ailab.e3soos</groupId>
+				      <artifactId>parent</artifactId>
+				      <version>0.0.1-SNAPSHOT</version>
+				      <classifier>ru.ailab.e3soos</classifier>
+				    </artifact>
+				  </target>
+				  <environments>
+				    <environment>
+				      <os>linux</os>
+				      <ws>gtk</ws>
+				      <arch>x86</arch>
+				    </environment>
+				  </environments>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -34,11 +47,6 @@
 			<id>indigo</id>
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/releases/indigo</url>
-		</repository>
-		<repository>
-			<id>galileoTest</id>
-			<layout>p2</layout>
-			<url>http://download.eclipse.org/eclipse/updates/3.6-JUnit-Tests/</url>
 		</repository>
 	</repositories>
 	<modules>

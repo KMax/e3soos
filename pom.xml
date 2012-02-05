@@ -44,14 +44,171 @@
     	<version>5.3.1.Final</version>
     </dependency>
     <dependency>
-    	<groupId>org.eclipse.swt</groupId>
-    	<artifactId>org.eclipse.swt.gtk.linux.x86</artifactId>
-    	<version>3.6.2</version>
-    </dependency>
-    <dependency>
     	<groupId>org.eclipse.jface</groupId>
     	<artifactId>org.eclipse.jface</artifactId>
     	<version>3.6.2</version>
     </dependency>
   </dependencies>
+  
+  <build>
+    <plugins>
+<!--         <plugin> -->
+<!--             <groupId>org.apache.maven.plugins</groupId> -->
+<!--             <artifactId>maven-jar-plugin</artifactId> -->
+<!--             <version>2.4</version> -->
+<!--             <configuration> -->
+<!--                 <finalName>e3soos</finalName> -->
+<!--                 <archive> -->
+<!--                     <manifest> -->
+<!--                         <mainClass>ru.ailab.e3soos.App</mainClass> -->
+<!--                         <addClasspath>true</addClasspath> -->
+<!--                         <classpathPrefix>lib/</classpathPrefix> -->
+<!--                     </manifest> -->
+<!--                 </archive> -->
+<!--             </configuration> -->
+<!--         </plugin> -->
+<!--         <plugin> -->
+<!--             <artifactId>maven-dependency-plugin</artifactId> -->
+<!--             <version>2.4</version> -->
+<!--             <configuration> -->
+<!--                 <outputDirectory>${project.build.directory}/classes/lib/</outputDirectory> -->
+<!--                 <overWriteReleases>false</overWriteReleases> -->
+<!--                 <overWriteSnapshots>false</overWriteSnapshots> -->
+<!--                 <overWriteIfNewer>true</overWriteIfNewer> -->
+<!--             </configuration> -->
+<!--             <executions> -->
+<!--                 <execution> -->
+<!--                     <id>copy-dependencies</id> -->
+<!--                     <phase>prepare-package</phase> -->
+<!--                     <goals> -->
+<!--                         <goal>copy-dependencies</goal> -->
+<!--                     </goals> -->
+<!--                 </execution> -->
+<!--             </executions> -->
+<!--         </plugin> -->
+     <plugin>
+       <groupId>org.apache.maven.plugins</groupId>
+       <artifactId>maven-assembly-plugin</artifactId>
+       <version>2.2.2</version>
+       <configuration>
+         <descriptorRefs>
+           <descriptorRef>jar-with-dependencies</descriptorRef>
+         </descriptorRefs>
+         <finalName>e3soos</finalName>
+         <archive>
+           <manifest>
+             <mainClass>ru.ailab.e3soos.App</mainClass>
+           </manifest>
+         </archive>
+       </configuration>
+       <executions>
+         <execution>
+           <phase>package</phase>
+           <goals>
+             <goal>single</goal>
+           </goals>
+         </execution>
+       </executions>
+     </plugin>
+    </plugins>
+  </build>
+  
+  <profiles>
+    <profile>
+        <id>linux.x86</id>
+        <activation>
+            <os>
+                <family>unix</family>
+                <arch>i386</arch>
+            </os>
+        </activation>
+        <dependencies>
+            <dependency>
+		        <groupId>org.eclipse.swt</groupId>
+		        <artifactId>org.eclipse.swt.gtk.linux.x86</artifactId>
+		        <version>3.6.2</version>
+		    </dependency>
+        </dependencies>
+    </profile>
+    <profile>
+        <id>linux.x86_64</id>
+        <activation>
+            <os>
+                <family>unix</family>
+                <arch>x86_64</arch>
+            </os>
+        </activation>
+        <dependencies>
+            <dependency>
+                <groupId>org.eclipse.swt</groupId>
+                <artifactId>org.eclipse.swt.gtk.linux.x86_64</artifactId>
+                <version>3.6.2</version>
+            </dependency>
+        </dependencies>
+    </profile>
+    <profile>
+        <id>windows.x86</id>
+        <activation>
+            <os>
+                <family>windows</family>
+                <arch>x86</arch>
+            </os>
+        </activation>
+        <dependencies>
+            <dependency>
+                <groupId>org.eclipse.swt</groupId>
+                <artifactId>org.eclipse.swt.win32.win32.x86</artifactId>
+                <version>3.6.2</version>
+            </dependency>
+        </dependencies>
+    </profile>
+    <profile>
+        <id>windows.x86_64</id>
+        <activation>
+            <os>
+                <family>windows</family>
+                <arch>x86_64</arch>
+            </os>
+        </activation>
+        <dependencies>
+            <dependency>
+                <groupId>org.eclipse.swt</groupId>
+                <artifactId>org.eclipse.swt.win32.win32.x86_64</artifactId>
+                <version>3.6.2</version>
+            </dependency>
+        </dependencies>
+    </profile>
+    <profile>
+        <id>mac.x86</id>
+        <activation>
+            <os>
+                <family>mac</family>
+                <arch>x86</arch>
+            </os>
+        </activation>
+        <dependencies>
+            <dependency>
+                <groupId>org.eclipse.swt</groupId>
+                <artifactId>org.eclipse.swt.cocoa.macosx</artifactId>
+                <version>3.6.2</version>
+            </dependency>
+        </dependencies>
+    </profile>
+    <profile>
+        <id>mac.x86_64</id>
+        <activation>
+            <os>
+                <family>mac</family>
+                <arch>x86_64</arch>
+            </os>
+        </activation>
+        <dependencies>
+            <dependency>
+                <groupId>org.eclipse.swt</groupId>
+                <artifactId>org.eclipse.swt.cocoa.macosx.x86_64</artifactId>
+                <version>3.6.2</version>
+            </dependency>
+        </dependencies>
+    </profile>
+  </profiles>
 </project>

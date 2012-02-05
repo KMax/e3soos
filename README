@@ -1,0 +1,3 @@
+To build the project run: mvn install.
+
+And run the jar file: java -jar target/e3soos-jar-with-dependencies.jar

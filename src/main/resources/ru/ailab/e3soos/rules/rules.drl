@@ -1,0 +1,235 @@
+package ru.ailab.e3soos.rules
+
+import ru.ailab.e3soos.model.Requirements
+import ru.ailab.e3soos.model.Classification
+
+rule "J0"
+    lock-on-active true
+    when
+        $class := Classification()
+        Requirements( aperture >= 2.8 )
+    then
+        modify( $class ){
+            setJ(0)
+        }
+end
+
+rule "J1"
+    lock-on-active true
+    when 
+        $class := Classification()
+        Requirements( aperture < 2.8 && > 1.5 )
+    then
+        modify( $class ){
+            setJ(1)
+        }
+end
+
+rule "J2"
+    lock-on-active true
+    when
+        $class := Classification()
+        Requirements( aperture <= 1.5 )
+    then
+        modify( $class ){
+            setJ(2)
+        }
+end
+
+rule "W0"
+    lock-on-active true
+    when
+        $class := Classification()
+        Requirements( arc <= 15 )
+    then
+        modify( $class ){
+            setW(0)
+        }
+end
+
+rule "W1"
+    lock-on-active true
+    when
+        $class := Classification()
+        Requirements( arc > 15 && < 60 )
+    then
+        modify( $class ){
+            setW(1)
+        }
+end
+
+rule "W2"
+    lock-on-active true
+    when
+        $class := Classification()
+        Requirements( arc >= 60 )
+    then
+        modify( $class ){
+            setW(2)
+        }
+end
+
+rule "F0"
+    lock-on-active true
+    when
+        $class := Classification()
+        Requirements( focalDistance <= 50 )
+    then
+        modify( $class ){
+            setF(0)
+        }
+end
+
+rule "F1"
+    lock-on-active true
+    when
+        $class := Classification()
+        Requirements( focalDistance > 50 && < 100)
+    then
+        modify( $class ){
+            setF(1)
+        }
+end
+
+rule "F2"
+    lock-on-active true
+    when
+        $class := Classification()
+        Requirements( focalDistance >= 100 )
+    then
+        modify( $class ){
+            setF(2)
+        }
+end
+
+rule "L0"
+    lock-on-active true
+    when
+        $class := Classification()
+        Requirements( chromaticInterval <= 5 )
+    then
+        modify( $class ){
+            setL(0)
+        }
+end
+
+rule "L1"
+    lock-on-active true
+    when
+        $class := Classification()
+        Requirements( chromaticInterval > 5 && < 200 )
+    then
+        modify( $class ){
+            setL(1)
+        }
+end
+
+rule "L2"
+    lock-on-active true
+    when
+        $class := Classification()
+        Requirements( chromaticInterval > 200 )
+    then
+        modify( $class ){
+            setL(2)
+        }
+end
+
+rule "Q0"
+    lock-on-active true
+    when
+        $class := Classification()
+        Requirements( imageQuality == Requirements.ImageQuality.GEOMETRICALLY_LIMITED )
+    then
+        modify( $class ){
+            setQ(0)
+        }
+end
+
+rule "Q1"
+    lock-on-active true
+    when
+        $class := Classification()
+        Requirements( imageQuality == Requirements.ImageQuality.INTERSTITIAL )
+    then
+        modify( $class ){
+            setQ(1)
+        }
+end
+
+rule "Q2"
+    lock-on-active true
+    when
+        $class := Classification()
+        Requirements( imageQuality == Requirements.ImageQuality.DIFFRACTION )
+    then
+        modify( $class ){
+            setQ(2)
+        }
+end
+
+rule "S0"
+    lock-on-active true
+    when
+        $class := Classification()
+        Requirements( $focus := focalDistance, backFocalSegment < $focus/2 )
+    then
+        modify( $class ){
+            setS(0)
+        }
+end
+
+rule "S1"
+    lock-on-active true
+    when
+        $class := Classification()
+        Requirements( $focus := focalDistance, backFocalSegment >= $focus/2 && <= $focus )
+    then
+        modify( $class ){
+            setS(1)
+        }
+end
+
+rule "S2"
+    lock-on-active true
+    when
+        $class := Classification()
+        Requirements( $focus := focalDistance, backFocalSegment > $focus )
+    then
+        modify( $class ){
+            setS(2)
+        }
+end
+
+rule "D0"
+    lock-on-active true
+    when
+        $class := Classification()
+        Requirements( pupilPosition == Requirements.EntrancePupilPosition.INSIDE )
+    then
+        modify( $class ){
+            setD(0)
+        }
+end
+
+rule "D1"
+    lock-on-active true
+    when
+        $class := Classification()
+        Requirements( pupilPosition == Requirements.EntrancePupilPosition.FORWARD )
+    then
+        modify( $class ){
+            setD(2)
+        }
+end
+
+rule "D2"
+    lock-on-active true
+    when
+        $class := Classification()
+        Requirements( imageQuality == Requirements.EntrancePupilPosition.BACKWARD )
+    then
+        modify( $class ){
+            setD(1)
+        }
+end

@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 
-import ru.ailab.e3soos.model.Requirements;
+import models.Requirements;
 
 public class RequirementForm extends Group {
 

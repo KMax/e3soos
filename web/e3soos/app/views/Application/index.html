@@ -1,33 +1,71 @@
 #{extends 'main.html' /}
 
-<table>
+<table id="main">
     <tr>
         <td>
-            <form>
+            <form action="@{Application.index()}" method="POST">
                 <table>
                     <thead>
                         <tr><td colspan="2">Технические требования</td></tr>
                     </thead>
                     <tr>
-                        <td>Светосила</td><td><input type="text"/></td>
+                        <td>Светосила</td>
+                        <td><input class="control" type="number" name="requirements.aperture"/></td>
                     </tr>
                     <tr>
-                        <td>Угол поля зрения</td><td><input type="text"/></td>
+                        <td>Угол поля зрения (градусы)</td>
+                        <td><input class="control" type="number" name="requirements.arc"/></td>
                     </tr>
                     <tr>
-                        <td>Фокусное расстояние</td><td><input type="text"/></td>
+                        <td>Фокусное расстояние (мм)</td>
+                        <td><input class="control" type="number" name="requirements.focalDistance"/></td>
                     </tr>
                     <tr>
-                        <td>Видемый хроматический диапазон</td><td><input type="text"/></td>
+                        <td>Видимый хроматический диапазон (нм)</td>
+                        <td>
+                            1. <input class="control" type="number" 
+                                   name="requirements.waveLength[0]"/><br/>
+                            2. <input class="control" type="number" 
+                                   name="requirements.waveLength[1]"/><br/>
+                            3. <input class="control" type="number" 
+                                   name="requirements.waveLength[2]"/><br/>
+                        </td>
                     </tr>
                     <tr>
-                        <td>Качество изображения</td><td><input type="text"/></td>
+                        <td>Качество изображения</td>
+                        <td>
+                            <select class="control" name="requirements.imageQuality">
+                                <option selected 
+                                    value="${models.Requirements.ImageQuality.GEOMETRICALLY_LIMITED}">
+                                    Геометрически-ограниченное</option>
+                                <option 
+                                    value="${models.Requirements.ImageQuality.INTERSTITIAL}">
+                                    Промежуточное</option>
+                                <option 
+                                    value="${models.Requirements.ImageQuality.DIFFRACTION}">
+                                    Дифракционное</option>
+                            </select>
+                        </td>
                     </tr>
                     <tr>
-                        <td>Задний фокальный отрезок</td><td><input type="text"/></td>
+                        <td>Задний фокальный отрезок (мм)</td>
+                        <td><input class="control" type="number" name="requirements.backFocalSegment"/></td>
                     </tr>
                     <tr>
-                        <td>Положение входного зрачка</td><td><input type="text"/></td>
+                        <td>Положение входного зрачка</td>
+                        <td>
+                            <select class="control" name="requirements.pupilPosition">
+                                <option selected 
+                                    value="${models.Requirements.EntrancePupilPosition.INSIDE}">Внутри системы</option>
+                                <option 
+                                    value="${models.Requirements.EntrancePupilPosition.FORWARD}">Вынесен вперед</option>
+                                <option 
+                                    value="${models.Requirements.EntrancePupilPosition.BACKWARD}">Вынесен назад</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><input type="submit" value="Классифицировать"/></td>
                     </tr>
                 </table>
             </form>
@@ -43,31 +81,31 @@
                     <td colspan="2">по оптическим характеристикам</td>
                 </tr>
                 <tr>
-                    <td>J</td><td>0</td>
+                    <td>J</td><td>${classification?.j}</td>
                 </tr>
                 <tr>
-                    <td>W</td><td>0</td>
+                    <td>W</td><td>${classification?.w}</td>
                 </tr>
                 <tr>
-                    <td>F</td><td>0</td>
+                    <td>F</td><td>${classification?.f}</td>
                 </tr>
                 <tr>
                     <td colspan="2">по назначению</td>
                 </tr>
                 <tr>
-                    <td>L</td><td>0</td>
+                    <td>L</td><td>${classification?.l}</td>
                 </tr>
                 <tr>
-                    <td>Q</td><td>0</td>
+                    <td>Q</td><td>${classification?.q}</td>
                 </tr>
                 <tr>
                     <td colspan="2">по конструктивным особенностям</td>
                 </tr>
                 <tr>
-                    <td>S</td><td>0</td>
+                    <td>S</td><td>${classification?.s}</td>
                 </tr>
                 <tr>
-                    <td>D</td><td>0</td>
+                    <td>D</td><td>${classification?.d}</td>
                 </tr>
             </table>
         </td>

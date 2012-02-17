@@ -1,4 +1,6 @@
-package ru.ailab.e3soos.model;
+package models;
+
+import java.util.Arrays;
 
 public class Requirements {
 	
@@ -17,7 +19,7 @@ public class Requirements {
 	private float aperture; //1:<aperture>
 	private float arc; //в градусах
 	private float focalDistance; //в мм
-	private float[] chromaticInterval; //в нм
+	private float[] waveLength; //в нм
 	private int imageQuality;
 	private float backFocalSegment; //в мм
 	private int pupilPosition;
@@ -81,17 +83,22 @@ public class Requirements {
 	 * 
 	 * @return
 	 */
-	public float[] getChromaticInterval() {
-		return chromaticInterval;
+	public float getChromaticInterval() {
+            Arrays.sort(waveLength);
+            return waveLength[2] - waveLength[0];
 	}
+        
+        public float[] getWaveLength(){
+            return waveLength;
+        }
 	
 	/**
 	 * Фокусное расстояние.
 	 * 
 	 * @param chromaticInterval
 	 */
-	public void setChromaticInterval(float[] chromaticInterval) {
-		this.chromaticInterval = chromaticInterval;
+	public void setWaveLength(float[] waveLengths) {
+		this.waveLength = waveLengths;
 	}
 	
 	/**

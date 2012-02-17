@@ -17,7 +17,7 @@ import org.drools.io.ResourceFactory;
 import org.drools.runtime.StatelessKnowledgeSession;
 
 import ru.ailab.e3soos.model.Classification;
-import ru.ailab.e3soos.model.Requirements;
+import models.Requirements;
 
 public class RuleRunner {
 

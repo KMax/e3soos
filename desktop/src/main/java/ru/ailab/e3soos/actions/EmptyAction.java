@@ -6,7 +6,7 @@ import org.eclipse.swt.SWT;
 
 import ru.ailab.e3soos.RuleRunner;
 import ru.ailab.e3soos.model.Classification;
-import ru.ailab.e3soos.model.Requirements;
+import models.Requirements;
 import ru.ailab.e3soos.ui.AppWindow;
 
 public class EmptyAction extends Action {

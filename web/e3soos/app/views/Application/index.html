@@ -35,15 +35,9 @@
                         <td>Качество изображения</td>
                         <td>
                             <select class="control" name="requirements.imageQuality">
-                                <option selected 
-                                    value="${models.Requirements.ImageQuality.GEOMETRICALLY_LIMITED}">
-                                    Геометрически-ограниченное</option>
-                                <option 
-                                    value="${models.Requirements.ImageQuality.INTERSTITIAL}">
-                                    Промежуточное</option>
-                                <option 
-                                    value="${models.Requirements.ImageQuality.DIFFRACTION}">
-                                    Дифракционное</option>
+                                #{list ru.ifmo.ailab.e3soos.facts.Requirements.ImageQuality.values(), as:'quality'}
+                                <option>${quality}</option>
+                                #{/list}
                             </select>
                         </td>
                     </tr>
@@ -55,12 +49,9 @@
                         <td>Положение входного зрачка</td>
                         <td>
                             <select class="control" name="requirements.pupilPosition">
-                                <option selected 
-                                    value="${models.Requirements.EntrancePupilPosition.INSIDE}">Внутри системы</option>
-                                <option 
-                                    value="${models.Requirements.EntrancePupilPosition.FORWARD}">Вынесен вперед</option>
-                                <option 
-                                    value="${models.Requirements.EntrancePupilPosition.BACKWARD}">Вынесен назад</option>
+                                #{list ru.ifmo.ailab.e3soos.facts.Requirements.EntrancePupilPosition.values(), as:'pos'}
+                                <option>${pos}</option>
+                                #{/list}
                             </select>
                         </td>
                     </tr>

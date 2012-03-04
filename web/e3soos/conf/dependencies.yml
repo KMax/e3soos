@@ -2,7 +2,7 @@
 
 require:
     - play 1.2.4
-    - org.drools -> drools-core 5.3.1.Final
-    - org.drools -> drools-compiler 5.3.1.Final:
+    - org.drools -> drools-core 5.3.0.Final
+    - org.drools -> drools-compiler 5.3.0.Final:
         exclude:
             - janino -> janino *

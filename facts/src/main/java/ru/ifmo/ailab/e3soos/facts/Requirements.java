@@ -1,7 +1,5 @@
 package ru.ifmo.ailab.e3soos.facts;
 
-import java.util.Arrays;
-
 public class Requirements {
 	
 	public enum ImageQuality {

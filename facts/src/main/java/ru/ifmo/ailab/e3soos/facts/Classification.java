@@ -1,4 +1,4 @@
-package models;
+package ru.ifmo.ailab.e3soos.facts;
 
 public class Classification {
 	private int J;

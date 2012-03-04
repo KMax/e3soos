@@ -1,9 +1,9 @@
 package controllers;
 
-import models.Classification;
-import models.Requirements;
 import models.RuleRunner;
 import play.mvc.Controller;
+import ru.ifmo.ailab.e3soos.facts.Classification;
+import ru.ifmo.ailab.e3soos.facts.Requirements;
 
 
 public class Application extends Controller {

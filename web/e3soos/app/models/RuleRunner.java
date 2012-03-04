@@ -12,6 +12,8 @@ import org.drools.event.rule.DebugAgendaEventListener;
 import org.drools.event.rule.DebugWorkingMemoryEventListener;
 import org.drools.io.ResourceFactory;
 import org.drools.runtime.StatelessKnowledgeSession;
+import ru.ifmo.ailab.e3soos.facts.Classification;
+import ru.ifmo.ailab.e3soos.facts.Requirements;
 
 public class RuleRunner {
 

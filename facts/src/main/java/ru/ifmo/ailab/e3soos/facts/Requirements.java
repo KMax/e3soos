@@ -1,28 +1,28 @@
-package models;
+package ru.ifmo.ailab.e3soos.facts;
 
 import java.util.Arrays;
 
 public class Requirements {
 	
-	public static class ImageQuality {
-		public static final int GEOMETRICALLY_LIMITED = 0;
-		public static final int INTERSTITIAL = 1;
-		public static final int DIFFRACTION = 2;
+	public enum ImageQuality {
+            GEOMETRICALLY_LIMITED,
+            INTERSTITIAL,
+            DIFFRACTION
 	}
 	
-	public static class EntrancePupilPosition {
-		public static final int INSIDE = 0;
-		public static final int FORWARD = 1;
-		public static final int BACKWARD = 2;
-	} 
+	public enum EntrancePupilPosition {
+            INSIDE,
+            FORWARD,
+            BACKWARD
+	}
 	
 	private float aperture; //1:<aperture>
 	private float arc; //в градусах
 	private float focalDistance; //в мм
-	private float[] waveLength; //в нм
-	private int imageQuality;
+	private float chromaticInterval; //в нм
+	private ImageQuality imageQuality;
 	private float backFocalSegment; //в мм
-	private int pupilPosition;
+	private EntrancePupilPosition pupilPosition;
 	
 	/**
 	 * Светосила.
@@ -84,29 +84,19 @@ public class Requirements {
 	 * @return
 	 */
 	public float getChromaticInterval() {
-            Arrays.sort(waveLength);
-            return waveLength[2] - waveLength[0];
+            return chromaticInterval;
 	}
         
-        public float[] getWaveLength(){
-            return waveLength;
+        public void setChromaticInterval(float chromaticInterval) {
+            this.chromaticInterval = chromaticInterval;
         }
-	
-	/**
-	 * Фокусное расстояние.
-	 * 
-	 * @param chromaticInterval
-	 */
-	public void setWaveLength(float[] waveLengths) {
-		this.waveLength = waveLengths;
-	}
 	
 	/**
 	 * Качество изображения.
 	 * 
 	 * @return
 	 */
-	public int getImageQuality() {
+	public ImageQuality getImageQuality() {
 		return imageQuality;
 	}
 	
@@ -115,7 +105,7 @@ public class Requirements {
 	 * 
 	 * @param imageQuality
 	 */
-	public void setImageQuality(int imageQuality) {
+	public void setImageQuality(ImageQuality imageQuality) {
 		this.imageQuality = imageQuality;
 	}
 	
@@ -142,7 +132,7 @@ public class Requirements {
 	 * 
 	 * @return
 	 */
-	public int getPupilPosition() {
+	public EntrancePupilPosition getPupilPosition() {
 		return pupilPosition;
 	}
 	
@@ -151,7 +141,7 @@ public class Requirements {
 	 * 
 	 * @param pupilPosition
 	 */
-	public void setPupilPosition(int pupilPosition) {
+	public void setPupilPosition(EntrancePupilPosition pupilPosition) {
 		this.pupilPosition = pupilPosition;
 	}
 }

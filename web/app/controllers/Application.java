@@ -1,6 +1,5 @@
 package controllers;
 
-import java.io.IOException;
 import play.mvc.Controller;
 import ru.ifmo.ailab.e3soos.facts.Classification;
 import ru.ifmo.ailab.e3soos.facts.Requirements;
@@ -11,9 +10,10 @@ public class Application extends Controller {
     
     private static final RuleRunner ruleRunner = new RuleRunner();
 
-    public static void index(Requirements requirements) throws IOException {
+    public static void index(Requirements requirements) {
         Classification classification = null;
-        if(requirements != null){
+        if(requirements != null) {
+            System.out.println(requirements.getSpectralRange());
             classification = ruleRunner.classify(requirements);
         }
         render(classification);

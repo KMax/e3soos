@@ -1,6 +1,5 @@
 package utils;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.drools.KnowledgeBase;
@@ -24,10 +23,11 @@ public class RuleRunner {
             
 	}
         
-        private static KnowledgeBase readKnowledgeBase() throws IOException {
+        private static KnowledgeBase readKnowledgeBase() {
             KnowledgeAgentConfiguration kconf = KnowledgeAgentFactory.
                     newKnowledgeAgentConfiguration();
             kconf.setProperty("drools.agent.scanDirectories", "false");
+            kconf.setProperty("drools.dialect.mvel.strict", "false");
             
             KnowledgeAgent kAgent = KnowledgeAgentFactory.
                     newKnowledgeAgent("Agent", kconf);
@@ -40,7 +40,7 @@ public class RuleRunner {
             return base;
         }
 	
-	public Classification classify(final Requirements reqs) throws IOException {
+	public Classification classify(final Requirements reqs) {
             Classification c = new Classification();
             kBase = readKnowledgeBase();
             StatelessKnowledgeSession session = kBase.

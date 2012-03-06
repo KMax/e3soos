@@ -10,25 +10,25 @@
                     </thead>
                     <tr>
                         <td>Светосила</td>
-                        <td><input class="control" type="number" name="requirements.aperture"/></td>
+                        <td><input class="control" type="number" name="requirements.apertureSpeed"/></td>
                     </tr>
                     <tr>
                         <td>Угол поля зрения (градусы)</td>
-                        <td><input class="control" type="number" name="requirements.arc"/></td>
+                        <td><input class="control" type="number" name="requirements.angularField"/></td>
                     </tr>
                     <tr>
                         <td>Фокусное расстояние (мм)</td>
-                        <td><input class="control" type="number" name="requirements.focalDistance"/></td>
+                        <td><input class="control" type="number" name="requirements.focalLength"/></td>
                     </tr>
                     <tr>
                         <td>Видимый хроматический диапазон (нм)</td>
                         <td>
                             1. <input class="control" type="number" 
-                                   name="requirements.waveLength[0]"/><br/>
+                                   name="requirements.waveLengths[0]"/><br/>
                             2. <input class="control" type="number" 
-                                   name="requirements.waveLength[1]"/><br/>
+                                   name="requirements.waveLengths[1]"/><br/>
                             3. <input class="control" type="number" 
-                                   name="requirements.waveLength[2]"/><br/>
+                                   name="requirements.waveLengths[2]"/><br/>
                         </td>
                     </tr>
                     <tr>
@@ -43,12 +43,12 @@
                     </tr>
                     <tr>
                         <td>Задний фокальный отрезок (мм)</td>
-                        <td><input class="control" type="number" name="requirements.backFocalSegment"/></td>
+                        <td><input class="control" type="number" name="requirements.backFocalDistance"/></td>
                     </tr>
                     <tr>
                         <td>Положение входного зрачка</td>
                         <td>
-                            <select class="control" name="requirements.pupilPosition">
+                            <select class="control" name="requirements.entrancePupilPosition">
                                 #{list ru.ifmo.ailab.e3soos.facts.Requirements.EntrancePupilPosition.values(), as:'pos'}
                                 <option>${pos}</option>
                                 #{/list}
@@ -97,6 +97,9 @@
                 </tr>
                 <tr>
                     <td>D</td><td>${classification?.d}</td>
+                </tr>
+                <tr>
+                    <td>Индекс сложности:</td><td>${classification?.r}</td>
                 </tr>
             </table>
         </td>

@@ -1,6 +1,8 @@
 package models;
 
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import play.data.validation.Required;
 import play.db.jpa.Model;
 
@@ -13,6 +15,9 @@ public class Role extends Model {
     
     @Required
     public String role;
+    
+    @ManyToMany(mappedBy="roles")
+    public List<User> users;
     
     public Role(final String r) {
         this.role = r;

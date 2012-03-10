@@ -1,0 +1,22 @@
+#{extends 'main.html' /}
+
+#{set 'moreStyles'}
+  #{stylesheet 'index.css' /}
+#{/set}
+
+<div id="index">
+  #{if isConnected}
+  Теперь вы можете перейти к
+  <a href="@{Application.dashboard()}">классификации оптической системы</a> или 
+  <a href="http://guvnor.ailab.ifmo.ru/main/">написанию правил</a>.
+  <div>
+    <a href="@{Secure.logout()}">Выйти</a>
+  </div>
+  #{/if}
+  #{else}
+  Добро пожаловать!
+  <div>
+    <a href="@{Secure.login()}">Войти</a>
+  </div>
+  #{/else}
+</div>

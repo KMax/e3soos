@@ -11,7 +11,7 @@ public class Application extends Controller {
     
     private static final RuleRunner ruleRunner = new RuleRunner();
     
-    public static void index(Requirements requirements) {
+    public static void dashboard(Requirements requirements) {
         Classification classification = null;
         if(requirements != null) {
             classification = ruleRunner.classify(requirements);

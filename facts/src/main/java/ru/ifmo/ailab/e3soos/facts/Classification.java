@@ -9,7 +9,7 @@ public class Classification {
     private int Q;
     private int S;
     private int D;
-    
+
     public Classification() {
         this.J = 0;
         this.W = 0;
@@ -19,7 +19,7 @@ public class Classification {
         this.S = 0;
         this.D = 0;
     }
-    
+
     public Classification(int j, int w, int f, int l, int q, int s, int d) {
         this.J = j;
         this.W = w;
@@ -85,40 +85,40 @@ public class Classification {
     public void setD(final int d) {
         D = d;
     }
-    
+
     public int getR() {
         return D + F + J + L + Q + S + W;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if(obj == null) {
+        if (obj == null) {
             return false;
         }
-        if(obj instanceof Classification) {
+        if (obj instanceof Classification) {
             Classification other = (Classification) obj;
-            if(this.D != other.D) {
+            if (this.D != other.D) {
                 return false;
             }
-            if(this.F != other.F) {
+            if (this.F != other.F) {
                 return false;
             }
-            if(this.J != other.J) {
+            if (this.J != other.J) {
                 return false;
             }
-            if(this.L != other.L) {
+            if (this.L != other.L) {
                 return false;
             }
-            if(this.Q != other.Q) {
+            if (this.Q != other.Q) {
                 return false;
             }
-            if(this.S != other.S) {
+            if (this.S != other.S) {
                 return false;
             }
-            if(this.W != other.W) {
+            if (this.W != other.W) {
                 return false;
             }
-            if(this.hashCode() != other.hashCode()) {
+            if (this.hashCode() != other.hashCode()) {
                 return false;
             }
             return true;

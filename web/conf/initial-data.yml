@@ -1,0 +1,4 @@
+ User(admin):
+   email: admin@localhost
+   password: secret
+   fullname: Admin

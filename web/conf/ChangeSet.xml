@@ -3,6 +3,6 @@
     xs:schemaLocation='http://drools.org/drools-5.0/change-set http://anonsvn.jboss.org/repos/labs/labs/jbossrules/trunk/drools-api/src/main/resources/change-set-1.0.0.xsd' >
     <add>
          <resource source='http://guvnor.ailab.ifmo.ru/main/org.drools.guvnor.Guvnor/package/e3soos.classification/LATEST' 
-         type='PKG' basicAuthentication='enabled' username='kolchm' password='gh382'/>
+         type='PKG' basicAuthentication='enabled'/>
     </add>
 </change-set>

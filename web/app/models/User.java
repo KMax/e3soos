@@ -1,6 +1,8 @@
 package models;
 
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import play.data.validation.Email;
 import play.data.validation.Required;
 import play.db.jpa.Model;
@@ -19,6 +21,9 @@ public class User extends Model {
     @Required
     public String password;
     public String fullName;
+    
+    @OneToMany
+    public List<Role> roles;
     
     public User(String email, String password, String fullName) {
         this.email = email;

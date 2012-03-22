@@ -9,6 +9,7 @@
 # Home page
 *       /                                       Index.index
 *       /dashboard                              Application.dashboard
+*       /classify                               Application.classify
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

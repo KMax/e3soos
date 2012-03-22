@@ -3,16 +3,20 @@
 #{set 'moreStyles'}
   #{stylesheet 'dashboard.css' /}
 #{/set}
+#{set 'moreScripts'}
+  #{script 'jquery-1.7.2.min.js'/}
+  #{script 'dashboard.js'/}
+#{/set}
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span4">
         <div class="form-horizontal">
             <legend>Technical requirements</legend>
             <div class="control-group">
-              <label class="control-label with-help" for="appertureSpeed">aperture speed
+              <label class="control-label with-help" for="apertureSpeed">aperture speed
               <i class="icon-question-sign"></i></label>
               <div class="controls input-append">
-                <input class="span6" id="appertureSpeed" type="number"/>
+                <input class="span6" id="apertureSpeed" type="number" required="true"/>
               </div>
             </div>
             <div class="control-group">
@@ -41,6 +45,7 @@
               <i class="icon-question-sign"></i></label>
               <div class="controls">
                 #{select 'requirements.imageQuality', class: "span8",
+                  id: "imageQuality",
                   items:ru.ifmo.ailab.e3soos.facts.Requirements.ImageQuality.values(),
                   labelProperty: 'name',
                   valueProperty: 'name',
@@ -53,6 +58,7 @@
               <i class="icon-question-sign"></i></label>
               <div class="controls input-append">
                 #{select 'requirements.entrancePupilPosition', class: "span8",
+                id: "entrancePupilPosition",
                 items:ru.ifmo.ailab.e3soos.facts.Requirements.EntrancePupilPosition.values(),
                 labelProperty: 'name',
                 valueProperty: 'name',
@@ -61,11 +67,11 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="spectralRange">spectral range
+              <label class="control-label" for="spectralRange-min">spectral range
               <i class="icon-question-sign"></i></label>
               <div class="controls input-append">
-                <input class="span2" id="spectralRange" type="number" placeholder="min."/>
-                <input class="span2" id="spectralRange" type="number" placeholder="max."/>
+                <input class="span3" id="spectralRange-min" type="number" placeholder="min."/>
+                <input class="span3" id="spectralRange-max" type="number" placeholder="max."/>
                 <span class="add-on">mm.</span>
               </div>
             </div>
@@ -73,7 +79,7 @@
       <div>
         <legend>Actions</legend>
         <div class="pagination-centered">
-          <button class="btn">Classify</button>
+          <button id="btn-classify" class="btn">Classify</button>
           <button class="btn">Synthesis</button>
           <button class="btn">Export</button>
         </div>
@@ -86,28 +92,28 @@
           <div class="span3 center-text">
             <div>...of optical characteristics.</div>
             <div>
-              J - <span id="class-J" class="label">-</span>
-              W - <span id="class-W" class="label">-</span>
-              F - <span id="class-F" class="label">-</span>
+              <p class="class-name">J - </p><span id="class-J" class="label">-</span>
+              <p class="class-name">W - </p><span id="class-W" class="label">-</span>
+              <p class="class-name">F - </p><span id="class-F" class="label">-</span>
             </div>
           </div>
           <div class="span3 center-text">
             <div>...by purposes.</div>
             <div>
-              L - <span id="class-L" class="label">-</span>
-              Q - <span id="class-Q" class="label">-</span>
+              <p class="class-name">L - </p><span id="class-L" class="label">-</span>
+              <p class="class-name">Q - </p><span id="class-Q" class="label">-</span>
             </div>
           </div>
           <div class="span3 center-text">
             <div>...according to design features.</div>
             <div>
-              S - <span id="class-S" class="label">-</span>
-              D - <span id="class-D" class="label">-</span>
+              <p class="class-name">S - </p><span id="class-S" class="label">-</span>
+              <p class="class-name">D - </p><span id="class-D" class="label">-</span>
             </div>
           </div>
           <div class="span3 center-text">
             <div>The complexity of the lens</div>
-            R - <span id="class-R" class="label">-</span>
+            <p class="class-name">R - </p><span id="class-R" class="label">-</span>
           </div>
         </div>
       </div>

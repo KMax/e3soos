@@ -1,7 +1,5 @@
 package ru.ifmo.ailab.e3soos.facts;
 
-import java.util.Arrays;
-
 public class Requirements {
 
     public enum ImageQuality {
@@ -24,7 +22,7 @@ public class Requirements {
     private ImageQuality imageQuality;
     private float backFocalDistance;
     private EntrancePupilPosition entrancePupilPosition;
-    private transient float[] waveLengths;
+    private float[] waveLengths;
 
     /**
      * Светосила.
@@ -89,16 +87,11 @@ public class Requirements {
         return spectralRange;
     }
 
-    public void setSpectralRange(float chromaticInterval) {
-        this.spectralRange = chromaticInterval;
-    }
-
     public void setWaveLengths(float[] waveLengths) {
         this.waveLengths = waveLengths;
-        Arrays.sort(waveLengths);
-        this.spectralRange = waveLengths[2] - waveLengths[0];
+        this.spectralRange = Math.abs(waveLengths[1] - waveLengths[0]);
     }
-    
+
     public float[] getWaveLengths() {
         return this.waveLengths;
     }

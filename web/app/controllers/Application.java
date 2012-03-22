@@ -16,7 +16,7 @@ public class Application extends Controller {
         if(requirements != null) {
             classification = ruleRunner.classify(requirements);
         }
-        render(classification);
+        render(classification, requirements);
     }
 
 }

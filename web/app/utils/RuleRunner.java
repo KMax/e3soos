@@ -45,8 +45,8 @@ public class RuleRunner {
             kBase = readKnowledgeBase();
             StatelessKnowledgeSession session = kBase.
                     newStatelessKnowledgeSession();
-            session.addEventListener(new DebugAgendaEventListener());
-            session.addEventListener(new DebugWorkingMemoryEventListener());
+            //session.addEventListener(new DebugAgendaEventListener());
+            //session.addEventListener(new DebugWorkingMemoryEventListener());
             List<Object> facts = new ArrayList<Object>();
             facts.add(reqs);
             facts.add(c);

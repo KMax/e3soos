@@ -3,109 +3,117 @@
 #{set 'moreStyles'}
   #{stylesheet 'dashboard.css' /}
 #{/set}
-
-<table id="main">
-  <tr>
-    <td>
-      <form action="@{Application.dashboard()}" method="POST">
-        <table>
-          <thead>
-            <tr><td colspan="2">Технические требования</td></tr>
-          </thead>
-          <tr>
-            <td>Светосила</td>
-            <td><input class="control" type="number" name="requirements.apertureSpeed"/></td>
-          </tr>
-          <tr>
-            <td>Угол поля зрения (градусы)</td>
-            <td><input class="control" type="number" name="requirements.angularField"/></td>
-          </tr>
-          <tr>
-            <td>Фокусное расстояние (мм)</td>
-            <td><input class="control" type="number" name="requirements.focalLength"/></td>
-          </tr>
-          <tr>
-            <td>Видимый хроматический диапазон (нм)</td>
-            <td>
-              1. <input class="control" type="number" 
-                        name="requirements.waveLengths[0]"/><br/>
-              2. <input class="control" type="number" 
-                        name="requirements.waveLengths[1]"/><br/>
-              3. <input class="control" type="number" 
-                        name="requirements.waveLengths[2]"/><br/>
-            </td>
-          </tr>
-          <tr>
-            <td>Качество изображения</td>
-            <td>
-              <select class="control" name="requirements.imageQuality">
-                #{list ru.ifmo.ailab.e3soos.facts.Requirements.ImageQuality.values(), as:'quality'}
-                <option>${quality}</option>
-                #{/list}
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td>Задний фокальный отрезок (мм)</td>
-            <td><input class="control" type="number" name="requirements.backFocalDistance"/></td>
-          </tr>
-          <tr>
-            <td>Положение входного зрачка</td>
-            <td>
-              <select class="control" name="requirements.entrancePupilPosition">
-                #{list ru.ifmo.ailab.e3soos.facts.Requirements.EntrancePupilPosition.values(), as:'pos'}
-                <option>${pos}</option>
-                #{/list}
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2"><input type="submit" value="Классифицировать"/></td>
-          </tr>
-        </table>
-      </form>
-    </td>
-    <td>
-      <table>
-        <thead>
-          <tr>
-            <td colspan="2">Классификация ОС</td>
-          </tr>
-        </thead>
-        <tr>
-          <td colspan="2">по оптическим характеристикам</td>
-        </tr>
-        <tr>
-          <td>J</td><td>${classification?.j}</td>
-        </tr>
-        <tr>
-          <td>W</td><td>${classification?.w}</td>
-        </tr>
-        <tr>
-          <td>F</td><td>${classification?.f}</td>
-        </tr>
-        <tr>
-          <td colspan="2">по назначению</td>
-        </tr>
-        <tr>
-          <td>L</td><td>${classification?.l}</td>
-        </tr>
-        <tr>
-          <td>Q</td><td>${classification?.q}</td>
-        </tr>
-        <tr>
-          <td colspan="2">по конструктивным особенностям</td>
-        </tr>
-        <tr>
-          <td>S</td><td>${classification?.s}</td>
-        </tr>
-        <tr>
-          <td>D</td><td>${classification?.d}</td>
-        </tr>
-        <tr>
-          <td>Индекс сложности:</td><td>${classification?.r}</td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-</table>
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span4">
+        <div class="form-horizontal">
+            <legend>Technical requirements</legend>
+            <div class="control-group">
+              <label class="control-label with-help" for="appertureSpeed">aperture speed
+              <i class="icon-question-sign"></i></label>
+              <div class="controls input-append">
+                <input class="span6" id="appertureSpeed" type="number"/>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="angularField">angular field
+              <i class="icon-question-sign"></i></label>
+              <div class="controls input-append">
+                <input class="span6" id="angularField" type="number" /><span class="add-on">&#176;</span>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="focalLength">focal length
+              <i class="icon-question-sign"></i></label>
+              <div class="controls input-append">
+                <input class="span6" id="focalLength" type="number" /><span class="add-on">mm.</span>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="backFocalDistance">back focal distance
+              <i class="icon-question-sign"></i></label>
+              <div class="controls input-append">
+                <input class="span6" id="backFocalDistance" type="number" /><span class="add-on">mm.</span>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="imageQuality">image quality
+              <i class="icon-question-sign"></i></label>
+              <div class="controls">
+                #{select 'requirements.imageQuality', class: "span8",
+                  items:ru.ifmo.ailab.e3soos.facts.Requirements.ImageQuality.values(),
+                  labelProperty: 'name',
+                  valueProperty: 'name',
+                  value: "${requirements?.imageQuality}"}
+                #{/select}
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="entrancePupilPosition">entrance pupil position
+              <i class="icon-question-sign"></i></label>
+              <div class="controls input-append">
+                #{select 'requirements.entrancePupilPosition', class: "span8",
+                items:ru.ifmo.ailab.e3soos.facts.Requirements.EntrancePupilPosition.values(),
+                labelProperty: 'name',
+                valueProperty: 'name',
+                value: "${requirements?.entrancePupilPosition}"}
+                #{/select}
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="spectralRange">spectral range
+              <i class="icon-question-sign"></i></label>
+              <div class="controls input-append">
+                <input class="span2" id="spectralRange" type="number" placeholder="min."/>
+                <input class="span2" id="spectralRange" type="number" placeholder="max."/>
+                <span class="add-on">mm.</span>
+              </div>
+            </div>
+        </div>
+      <div>
+        <legend>Actions</legend>
+        <div class="pagination-centered">
+          <button class="btn">Classify</button>
+          <button class="btn">Synthesis</button>
+          <button class="btn">Export</button>
+        </div>
+      </div>
+    </div>
+    <div class="span8">
+      <div>
+        <legend>The lens classification...</legend>
+        <div class="row-fluid">
+          <div class="span3 center-text">
+            <div>...of optical characteristics.</div>
+            <div>
+              J - <span id="class-J" class="label">-</span>
+              W - <span id="class-W" class="label">-</span>
+              F - <span id="class-F" class="label">-</span>
+            </div>
+          </div>
+          <div class="span3 center-text">
+            <div>...by purposes.</div>
+            <div>
+              L - <span id="class-L" class="label">-</span>
+              Q - <span id="class-Q" class="label">-</span>
+            </div>
+          </div>
+          <div class="span3 center-text">
+            <div>...according to design features.</div>
+            <div>
+              S - <span id="class-S" class="label">-</span>
+              D - <span id="class-D" class="label">-</span>
+            </div>
+          </div>
+          <div class="span3 center-text">
+            <div>The complexity of the lens</div>
+            R - <span id="class-R" class="label">-</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <legend>Schematic circuits</legend>
+      </div>
+    </div>
+  </div>
+</div>

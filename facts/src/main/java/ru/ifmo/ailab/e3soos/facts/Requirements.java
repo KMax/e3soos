@@ -24,6 +24,7 @@ public class Requirements {
     private ImageQuality imageQuality;
     private float backFocalDistance;
     private EntrancePupilPosition entrancePupilPosition;
+    private transient float[] waveLengths;
 
     /**
      * Светосила.
@@ -93,8 +94,13 @@ public class Requirements {
     }
 
     public void setWaveLengths(float[] waveLengths) {
+        this.waveLengths = waveLengths;
         Arrays.sort(waveLengths);
         this.spectralRange = waveLengths[2] - waveLengths[0];
+    }
+    
+    public float[] getWaveLengths() {
+        return this.waveLengths;
     }
 
     /**

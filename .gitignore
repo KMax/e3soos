@@ -1,0 +1,14 @@
+.*
+*~
+*target*
+e3soos.war
+web/conf/changesets/*
+web/db/*
+web/eclipse/*
+web/nbproject/*
+web/lib/*
+web/logs/*
+web/modules/*
+web/precompiled/*
+web/test-result/*
+web/tmp/*

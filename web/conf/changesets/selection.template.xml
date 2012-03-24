@@ -6,8 +6,8 @@
       source="http://guvnor.ailab.ifmo.ru/main/org.drools.guvnor.Guvnor/package/e3soos.fast/LATEST"
       type="PKG"
       basicAuthentication="enabled"
-      username=""
-      password=""
+      username="kolchinmax@gmail.com"
+      password="789987"
     />
   </add>
   <add>
@@ -15,8 +15,8 @@
       source="http://guvnor.ailab.ifmo.ru/main/org.drools.guvnor.Guvnor/package/e3soos.basic/LATEST"
       type="PKG"
       basicAuthentication="enabled"
-      username=""
-      password=""
+      username="kolchinmax@gmail.com"
+      password="789987"
       />
     </add>
 </change-set>

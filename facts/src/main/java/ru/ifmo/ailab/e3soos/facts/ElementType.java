@@ -7,7 +7,7 @@ package ru.ifmo.ailab.e3soos.facts;
 public enum ElementType {
 
     BASIC, FAST, CORRECTION, WIDE_ANGULAR;
-    
+
     public static ElementType parse(final String value) {
         try {
             return valueOf(value);
@@ -15,7 +15,7 @@ public enum ElementType {
             if(value.length() == 1) {
                 if(value.equalsIgnoreCase("b")){
                     return BASIC;
-                } else if(value.equalsIgnoreCase("f")) {
+                } else if(value.equalsIgnoreCase("t")) {
                     return FAST;
                 } else if(value.equalsIgnoreCase("c")) {
                     return CORRECTION;

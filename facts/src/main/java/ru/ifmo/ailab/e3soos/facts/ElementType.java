@@ -26,4 +26,17 @@ public enum ElementType {
         }
         throw new IllegalArgumentException();
     }
+
+    public String toShortName() {
+        if(this == BASIC) {
+            return "B";
+        } else if(this == FAST) {
+            return "T";
+        } else if(this == CORRECTION) {
+            return "C";
+        } else if(this == WIDE_ANGULAR) {
+            return "Y";
+        }
+        return "B";
+    }
 }

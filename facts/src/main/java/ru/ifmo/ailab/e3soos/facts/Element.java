@@ -106,4 +106,16 @@ public class Element {
                 ? this.secondSurfaceType.hashCode() : 0);
         return hash;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder codeBuilder = new StringBuilder();
+        codeBuilder.append(elementType.toShortName());
+        codeBuilder.append(firstSurfaceZone);
+        codeBuilder.append(firstSurfaceType.toShortName());
+        codeBuilder.append(secondSurfaceZone);
+        codeBuilder.append(secondSurfaceType.toShortName());
+
+        return  codeBuilder.toString();
+    }
 }

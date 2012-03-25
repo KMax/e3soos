@@ -7,11 +7,11 @@ package ru.ifmo.ailab.e3soos.facts;
 public enum SurfaceType {
 
     O, P, A, F, I, V;
-    
+
     public static SurfaceType parse(final String value) {
         try {
             return valueOf(value);
-        } catch(IllegalArgumentException ex) {
+        } catch(IllegalArgumentException ignored) {
             if(value.length() == 1) {
                 if(value.equalsIgnoreCase("o")){
                     return O;
@@ -29,5 +29,9 @@ public enum SurfaceType {
             }
         }
         throw new IllegalArgumentException();
+    }
+
+    public String toShortName() {
+        return name();
     }
 }

@@ -4,6 +4,6 @@
     <add>
       <resource
         source='http://guvnor.ailab.ifmo.ru/main/org.drools.guvnor.Guvnor/package/e3soos.classification/LATEST'
-        type='PKG' basicAuthentication="enabled" username="kolchinmax@gmail.com" password="789987"/>
+        type='PKG' basicAuthentication="enabled" username="" password=""/>
     </add>
 </change-set>

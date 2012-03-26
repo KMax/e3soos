@@ -27,7 +27,6 @@ public class Application extends Controller {
 
     public static void synthesis(Classification classification) {
         if(classification != null) {
-            System.out.println(classification.getS() + " " + classification.getD() + " " + classification.getR());
             List<String> codes = new ArrayList<String>();
             for(Schema schema : RuleRunner.synthesis(classification)) {
                 codes.add(schema.toString());

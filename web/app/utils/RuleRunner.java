@@ -38,7 +38,8 @@ public abstract class RuleRunner {
                 new Resource[] {
                     ResourceFactory.newClassPathResource("e3soos.basic.xml", RuleRunner.class),
                     ResourceFactory.newClassPathResource("e3soos.fast.xml", RuleRunner.class),
-                    ResourceFactory.newClassPathResource("e3soos.generation.xml", RuleRunner.class)
+                    ResourceFactory.newClassPathResource("e3soos.generation.xml", RuleRunner.class),
+                    ResourceFactory.newClassPathResource("e3soos.wideangular.xml", RuleRunner.class)
                 });
     }
 

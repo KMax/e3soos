@@ -10,3 +10,7 @@
 span[id^="class-"] {
   font-size: larger;
 }
+
+#schemas-area {
+  margin-top: 30px;
+}

@@ -6,7 +6,10 @@ package ru.ifmo.ailab.e3soos.facts;
  */
 public enum ElementType {
 
-    BASIC, FAST, CORRECTION, WIDE_ANGULAR;
+    B, // Basic element
+    T, // Fast element
+    C, // Correction element
+    Y; // Wide-angular element
 
     public static ElementType parse(final String value) {
         try {
@@ -14,13 +17,13 @@ public enum ElementType {
         } catch(IllegalArgumentException ex) {
             if(value.length() == 1) {
                 if(value.equalsIgnoreCase("b")){
-                    return BASIC;
+                    return B;
                 } else if(value.equalsIgnoreCase("t")) {
-                    return FAST;
+                    return T;
                 } else if(value.equalsIgnoreCase("c")) {
-                    return CORRECTION;
+                    return C;
                 } else if(value.equalsIgnoreCase("y")){
-                    return WIDE_ANGULAR;
+                    return Y;
                 }
             }
         }
@@ -28,13 +31,13 @@ public enum ElementType {
     }
 
     public String toShortName() {
-        if(this == BASIC) {
+        if(this == B) {
             return "B";
-        } else if(this == FAST) {
+        } else if(this == T) {
             return "T";
-        } else if(this == CORRECTION) {
+        } else if(this == C) {
             return "C";
-        } else if(this == WIDE_ANGULAR) {
+        } else if(this == Y) {
             return "Y";
         }
         return "B";

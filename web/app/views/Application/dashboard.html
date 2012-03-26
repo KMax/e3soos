@@ -23,21 +23,24 @@
               <label class="control-label" for="angularField">angular field
               <i class="icon-question-sign"></i></label>
               <div class="controls input-append">
-                <input class="span6" id="angularField" type="number" /><span class="add-on">&#176;</span>
+                <input class="span6" id="angularField" type="number" required="true"/>
+                <span class="add-on">&#176;</span>
               </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="focalLength">focal length
               <i class="icon-question-sign"></i></label>
               <div class="controls input-append">
-                <input class="span6" id="focalLength" type="number" /><span class="add-on">mm.</span>
+                <input class="span6" id="focalLength" type="number" required="true"/>
+                <span class="add-on">mm.</span>
               </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="backFocalDistance">back focal distance
               <i class="icon-question-sign"></i></label>
               <div class="controls input-append">
-                <input class="span6" id="backFocalDistance" type="number" /><span class="add-on">mm.</span>
+                <input class="span6" id="backFocalDistance" type="number" required="true"/>
+                <span class="add-on">mm.</span>
               </div>
             </div>
             <div class="control-group">
@@ -70,9 +73,11 @@
               <label class="control-label" for="spectralRange-min">spectral range
               <i class="icon-question-sign"></i></label>
               <div class="controls input-append">
-                <input class="span3" id="spectralRange-min" type="number" placeholder="min."/>
-                <input class="span3" id="spectralRange-max" type="number" placeholder="max."/>
-                <span class="add-on">mm.</span>
+                <input class="span3" id="spectralRange-min" type="number"
+                       placeholder="min." required="true"/>
+                <input class="span3" id="spectralRange-max" type="number"
+                       placeholder="max." required="true"/>
+                <span class="add-on">nm.</span>
               </div>
             </div>
         </div>
@@ -80,7 +85,7 @@
         <legend>Actions</legend>
         <div class="pagination-centered">
           <button id="btn-classify" class="btn">Classify</button>
-          <button class="btn">Synthesis</button>
+          <button id="btn-synthesis" class="btn">Synthesis</button>
           <button class="btn">Export</button>
         </div>
       </div>
@@ -117,7 +122,7 @@
           </div>
         </div>
       </div>
-      <div>
+      <div id="schemas-area">
         <legend>Schematic circuits</legend>
       </div>
     </div>

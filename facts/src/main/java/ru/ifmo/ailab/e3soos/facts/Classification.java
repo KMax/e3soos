@@ -2,92 +2,72 @@ package ru.ifmo.ailab.e3soos.facts;
 
 public class Classification {
 
-    private int J;
-    private int W;
-    private int F;
-    private int L;
-    private int Q;
-    private int S;
-    private int D;
-
-    public Classification() {
-        this.J = 0;
-        this.W = 0;
-        this.F = 0;
-        this.L = 0;
-        this.Q = 0;
-        this.S = 0;
-        this.D = 0;
-    }
-
-    public Classification(int j, int w, int f, int l, int q, int s, int d) {
-        this.J = j;
-        this.W = w;
-        this.F = f;
-        this.L = l;
-        this.Q = q;
-        this.S = s;
-        this.D = d;
-    }
+    private int j;
+    private int w;
+    private int f;
+    private int l;
+    private int q;
+    private int s;
+    private int d;
 
     public int getJ() {
-        return J;
+        return j;
     }
 
     public void setJ(final int j) {
-        J = j;
+        this.j = j;
     }
 
     public int getW() {
-        return W;
+        return w;
     }
 
     public void setW(final int w) {
-        W = w;
+        this.w = w;
     }
 
     public int getF() {
-        return F;
+        return f;
     }
 
     public void setF(final int f) {
-        F = f;
+        this.f = f;
     }
 
     public int getL() {
-        return L;
+        return l;
     }
 
     public void setL(final int l) {
-        L = l;
+        this.l = l;
     }
 
     public int getQ() {
-        return Q;
+        return q;
     }
 
     public void setQ(final int q) {
-        Q = q;
+        this.q = q;
     }
 
     public int getS() {
-        return S;
+        return s;
     }
 
     public void setS(final int s) {
-        S = s;
+        this.s = s;
     }
 
     public int getD() {
-        return D;
+        return d;
     }
 
     public void setD(final int d) {
-        D = d;
+        this.d = d;
     }
 
     public int getR() {
-        return D + F + J + L + Q + S + W;
+        return d + f + j + l + q + s + w;
     }
 
     @Override
@@ -97,25 +77,25 @@ public class Classification {
         }
         if (obj instanceof Classification) {
             Classification other = (Classification) obj;
-            if (this.D != other.D) {
+            if (this.d != other.d) {
                 return false;
             }
-            if (this.F != other.F) {
+            if (this.f != other.f) {
                 return false;
             }
-            if (this.J != other.J) {
+            if (this.j != other.j) {
                 return false;
             }
-            if (this.L != other.L) {
+            if (this.l != other.l) {
                 return false;
             }
-            if (this.Q != other.Q) {
+            if (this.q != other.q) {
                 return false;
             }
-            if (this.S != other.S) {
+            if (this.s != other.s) {
                 return false;
             }
-            if (this.W != other.W) {
+            if (this.w != other.w) {
                 return false;
             }
             if (this.hashCode() != other.hashCode()) {
@@ -129,13 +109,13 @@ public class Classification {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 47 * hash + this.J;
-        hash = 47 * hash + this.W;
-        hash = 47 * hash + this.F;
-        hash = 47 * hash + this.L;
-        hash = 47 * hash + this.Q;
-        hash = 47 * hash + this.S;
-        hash = 47 * hash + this.D;
+        hash = 47 * hash + this.j;
+        hash = 47 * hash + this.w;
+        hash = 47 * hash + this.f;
+        hash = 47 * hash + this.l;
+        hash = 47 * hash + this.q;
+        hash = 47 * hash + this.s;
+        hash = 47 * hash + this.d;
         return hash;
     }
 }

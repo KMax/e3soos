@@ -26,7 +26,7 @@ public class Schema {
     }
 
     public Schema(final Element b) {
-        if(b.getElementType() != ElementType.BASIC) {
+        if(b.getElementType() != ElementType.B) {
             throw new IllegalArgumentException();
         }
         this.bElement = b;
@@ -37,7 +37,7 @@ public class Schema {
     }
 
     public void setYElement(final Element y) {
-        if(y.getElementType() != ElementType.WIDE_ANGULAR) {
+        if(y.getElementType() != ElementType.Y) {
             throw new IllegalArgumentException();
         }
         this.yElement = y;
@@ -48,7 +48,7 @@ public class Schema {
     }
 
     public void setBElement(final Element b) {
-        if(b.getElementType() != ElementType.BASIC) {
+        if(b.getElementType() != ElementType.B) {
             throw new IllegalArgumentException();
         }
         this.bElement = b;
@@ -59,7 +59,7 @@ public class Schema {
     }
 
     public void setTElement(final Element t) {
-        if(t.getElementType() != ElementType.FAST) {
+        if(t.getElementType() != ElementType.T) {
             throw new IllegalArgumentException();
         }
         this.tElement = t;

@@ -10,6 +10,7 @@
 *       /                                       Index.index
 *       /dashboard                              Application.dashboard
 *       /classify                               Application.classify
+*       /synthesis                              Application.synthesis
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

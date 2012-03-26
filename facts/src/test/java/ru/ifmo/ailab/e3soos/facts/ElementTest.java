@@ -14,9 +14,9 @@ public class ElementTest {
 
     @Test
     public void testEquals() {
-        Element expected = new Element(ElementType.BASIC, 1, SurfaceType.V, 1, SurfaceType.V);
-        Element actual_0 = new Element(ElementType.BASIC, 2, SurfaceType.A, 2, SurfaceType.A);
-        Element actual_1 = new Element(ElementType.BASIC, 1, SurfaceType.V, 1, SurfaceType.V);
+        Element expected = new Element(ElementType.B, 1, SurfaceType.V, 1, SurfaceType.V);
+        Element actual_0 = new Element(ElementType.B, 2, SurfaceType.A, 2, SurfaceType.A);
+        Element actual_1 = new Element(ElementType.B, 1, SurfaceType.V, 1, SurfaceType.V);
 
         assertTrue(expected.equals(actual_1));
         assertTrue(actual_1.equals(expected));

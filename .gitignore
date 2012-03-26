@@ -2,9 +2,9 @@
 *~
 *target*
 e3soos.war
-web/conf/changesets/*
 web/db/*
 web/eclipse/*
+web/conf/e3soos.*
 web/nbproject/*
 web/lib/*
 web/logs/*

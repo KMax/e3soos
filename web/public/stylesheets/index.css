@@ -1,6 +1,11 @@
-#index {
-  margin: auto;
-  padding: 20px;
-  text-align: center;
+#main-container {
+  margin-top: 10%;
 }
 
+.brand-name {
+  margin: 100px 0 100px 0;
+  font-size: xx-large;
+  font-family: sans-serif;
+  font-size-adjust: 0.5;
+  color: #049cdb;
+}

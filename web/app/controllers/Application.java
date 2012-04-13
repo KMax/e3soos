@@ -1,8 +1,10 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import models.ClassificationSerializer;
+import models.User;
 import play.mvc.Controller;
 import play.mvc.With;
 import ru.ifmo.ailab.e3soos.facts.Classification;
@@ -14,7 +16,8 @@ import utils.RuleRunner;
 public class Application extends Controller {
 
     public static void dashboard() {
-        render();
+        User user = User.find("byEmail", Security.connected()).first();
+        render(user);
     }
 
     public static void classify(Requirements requirements) {

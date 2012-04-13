@@ -4,19 +4,65 @@
   #{stylesheet 'index.css' /}
 #{/set}
 
-<div id="index">
-  #{if isConnected}
-  Теперь вы можете перейти к
-  <a href="@{Application.dashboard()}">классификации оптической системы</a> или 
-  <a href="http://guvnor.ailab.ifmo.ru/main/">написанию правил</a>.
-  <div>
-    <a href="@{Secure.logout()}">Выйти</a>
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span3 offset3 brand-name">Project X</div>
   </div>
-  #{/if}
-  #{else}
-  Добро пожаловать!
-  <div>
-    <a href="@{Secure.login()}">Войти</a>
-  </div>
-  #{/else}
-</div>
+  <div class="row-fluid">
+    <div class="span7 hero-unit">
+      <h1>Heading</h1>
+      <p>Tagline</p>
+    </div>
+    <div class="span3">
+      #{if isConnected}
+      <div class="well">
+        <ul class="nav nav-pills nav-stacked">
+          <li class="nav-header">Navigation</li>
+          <li><a href="@{Application.dashboard()}">Рабочий стол оптика</a></li>
+          <li><a href="http://guvnor.ailab.ifmo.ru/main/">Рабочий стол инженера по знаниям</a></li>
+        </ul>
+        <a class="btn btn-primary" href="@{Secure.logout()}">Logout</a>
+      </div>
+      #{/if}
+      #{else}
+        #{form @Secure.authenticate(), class: 'well'}
+
+          #{if flash.error}
+            <p class="error">
+              &{flash.error}
+            </p>
+          #{/if}
+          #{if flash.success}
+            <p class="success">
+              &{flash.success}
+            </p>
+          #{/if}
+          <fieldset>
+            <div class="control-group">
+              <label class="control-label" for="username">&{'secure.username'}</label>
+              <div class="controls">
+                <input class="span3" type="text" name="username" id="username" value="${flash.username}" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="password">&{'secure.password'}</label>
+              <div class="controls">
+                <input class="span3" type="password" name="password" id="password" value="" />
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="controls">
+                <input class="btn btn-primary" type="submit" id="signin" value="&{'secure.signin'}" />
+                <span class="help-inline">*only for alpha-testers</span>
+              </div>
+            </div>
+          </fieldset>
+        #{/form}
+      #{/else}
+    </div>
+  </div> <!-- row -->
+  <footer class="footer">
+    <hr>
+    <p>blah-blah</p>
+  </footer>
+</div> <!-- container -->

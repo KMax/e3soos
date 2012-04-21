@@ -5,6 +5,8 @@
 #{/set}
 #{set 'moreScripts'}
   #{script 'jquery-1.7.2.min.js'/}
+  #{script 'bootstrap-button.js'/}
+  #{script 'bootstrap-modal.js'/}
   #{script 'dashboard.js'/}
 #{/set}
 <div class="container-fluid">
@@ -13,6 +15,9 @@
       <div class="container">
         <ul class="nav pull-left">
           <li><a class="brand" href="#">Project X</a></li>
+          <li class="divider-vertical"></li>
+          <li><a href="/">Home</a></li>
+          <li class="divider-vertical"></li>
         </ul>
         <ul class="nav pull-right">
           <li class="divider-vertical"></li>
@@ -102,9 +107,10 @@
       <div>
         <legend>Actions</legend>
         <div class="center-text">
-          <button id="btn-classify" class="btn">Classify</button>
-          <button id="btn-synthesis" class="btn">Synthesis</button>
+          <button id="btn-classify" class="btn btn-primary">Classify</button>
+          <button id="btn-synthesis" class="btn btn-primary">Synthesize</button>
           <button class="btn">Export</button>
+          <button id="debug" class="btn btn-mini" data-toggle="button">Debug</button>
         </div>
       </div>
     </div>

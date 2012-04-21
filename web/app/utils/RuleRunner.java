@@ -7,8 +7,6 @@ import org.drools.agent.KnowledgeAgent;
 import org.drools.agent.KnowledgeAgentConfiguration;
 import org.drools.agent.KnowledgeAgentFactory;
 import org.drools.command.CommandFactory;
-import org.drools.event.rule.DebugAgendaEventListener;
-import org.drools.event.rule.DebugWorkingMemoryEventListener;
 import org.drools.io.Resource;
 import org.drools.io.ResourceFactory;
 import org.drools.runtime.ExecutionResults;
@@ -58,8 +56,6 @@ public abstract class RuleRunner {
             Classification c = new Classification();
             StatelessKnowledgeSession session = kbClassification.
                     newStatelessKnowledgeSession();
-            //session.addEventListener(new DebugAgendaEventListener());
-            //session.addEventListener(new DebugWorkingMemoryEventListener());
             List<Object> facts = new ArrayList<Object>();
             facts.add(reqs);
             facts.add(c);
@@ -70,22 +66,14 @@ public abstract class RuleRunner {
     public static List<Schema> synthesis(final Classification classification) {
         List<Schema> schemas = new ArrayList<Schema>();
         StatelessKnowledgeSession session = kbSynthesis.newStatelessKnowledgeSession();
-        //session.addEventListener(new DebugAgendaEventListener());
-        //session.addEventListener(new DebugWorkingMemoryEventListener());
         List cmds = new ArrayList();
         cmds.add(CommandFactory.newInsert(classification));
         cmds.add(CommandFactory.newFireAllRules());
-        cmds.add(CommandFactory.newQuery("getElements", "get the all elements"));
         cmds.add(CommandFactory.newQuery("getSchemas", "get the all schemas"));
 
         ExecutionResults results = (ExecutionResults) session.execute(
                 CommandFactory.newBatchExecution(cmds));
 
-        NativeQueryResults elements = (NativeQueryResults) results.getValue("getElements");
-//        System.out.println("Elements:");
-//        for(QueryResultsRow row : elements){
-//            System.out.println(row.get("element").toString());
-//        }
         NativeQueryResults schemasResults = (NativeQueryResults) results.getValue("getSchemas");
         for(QueryResultsRow row : schemasResults) {
             schemas.add((Schema)row.get("schema"));

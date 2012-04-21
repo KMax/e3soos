@@ -2,6 +2,7 @@
 *~
 *target*
 e3soos.war
+web/*.log
 web/db/*
 web/eclipse/*
 web/conf/e3soos.*

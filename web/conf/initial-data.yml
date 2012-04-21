@@ -1,4 +1,8 @@
+ Role(expert):
+   role: "expert"
+
  User(admin):
    email: admin@localhost.com
    password: secret
-   fullName: Admin
+   fullName: "Admin"
+   roles: [expert]

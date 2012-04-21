@@ -118,4 +118,9 @@ public class Classification {
         hash = 47 * hash + this.d;
         return hash;
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

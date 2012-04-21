@@ -28,13 +28,13 @@ public class Application extends Controller {
         badRequest();
     }
 
-    public static void synthesis(Classification classification) {
+    public static void synthesis(Classification classification) throws InterruptedException {
         if(classification != null) {
-            List<String> codes = new ArrayList<String>();
+            List<String> schemes = new ArrayList<String>();
             for(Schema schema : RuleRunner.synthesis(classification)) {
-                codes.add(schema.toString());
+                schemes.add(schema.toString());
             }
-            renderJSON(codes);
+            renderJSON(schemes);
         }
         badRequest();
     }

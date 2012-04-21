@@ -10,6 +10,7 @@ $(document).ready(function(){
     dashboard.synthesis();
     event.preventDefault();
   });
+  $('#debug').button();
 });
 
 var dashboard = (function(){
@@ -84,22 +85,25 @@ var dashboard = (function(){
   }
 
   /**
-   * Public methods and varibales.
+   * Public methods and variables.
    */
   return {
     classify: function() {
       readTechnicalReqs();
+      progressbar.show();
       $.getJSON(
         '/classify?' + toParam(technicalReqs, 'requirements.'),
         function(data) {
           classification = data;
           writeClassification();
+          progressbar.hide();
         }
       );
     },
     synthesis: function() {
       if(!jQuery.isEmptyObject(classification)) {
         delete classification.R;
+        progressbar.show();
         $.getJSON(
           '/synthesis?' + toParam(classification, 'classification.'),
           function(data) {
@@ -107,10 +111,43 @@ var dashboard = (function(){
 
             removeSchemas();
             writeSchemas();
+            progressbar.hide();
           }
         );
       }
     }
   };
 
+})();
+
+var progressbar = (function() {
+
+  var createDOM = function() {
+    $('body').append('<div id="progressbar" class="modal fade">'
+      + '<div class="modal-header"><h3>Please, waiting...</h3></div>'
+      +'</div>');
+  }
+
+  var removeDOM = function() {
+    $('#progressbar').detach();
+  }
+
+  /**
+   * Public methods and variables.
+   */
+  return {
+    show: function() {
+      createDOM();
+      $('#progressbar').modal({
+        backdrop: 'static',
+        keyboard: false,
+        show: false
+      });
+      $('#progressbar').modal('show');
+    },
+    hide: function() {
+      $('#progressbar').modal('hide');
+      removeDOM();
+    }
+  } ;
 })();

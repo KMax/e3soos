@@ -96,7 +96,9 @@ var dashboard = (function(){
         function(data) {
           classification = data;
           writeClassification();
-          progressbar.hide();
+          setTimeout(function(){
+            progressbar.hide();
+          }, 700);
         }
       );
     },
@@ -111,7 +113,9 @@ var dashboard = (function(){
 
             removeSchemas();
             writeSchemas();
-            progressbar.hide();
+            setTimeout(function(){
+              progressbar.hide();
+            }, 700);
           }
         );
       }

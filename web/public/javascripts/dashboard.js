@@ -31,14 +31,14 @@ var dashboard = (function(){
    * Reads technical requirements from the DOM tree and saves them.
    */
   var readTechnicalReqs = function() {
-    technicalReqs['apertureSpeed'] = $('#apertureSpeed').val();
-    technicalReqs['angularField'] = $('#angularField').val();
-    technicalReqs['focalLength'] = $('#focalLength').val();
-    technicalReqs['imageQuality'] = $('#imageQuality').val();
-    technicalReqs['backFocalDistance'] = $('#backFocalDistance').val();
-    technicalReqs['entrancePupilPosition'] = $('#entrancePupilPosition').val();
-    technicalReqs['waveLengths[0]'] = $('#spectralRange-min').val();
-    technicalReqs['waveLengths[1]'] = $('#spectralRange-max').val();
+    technicalReqs['apertureSpeed'] = $('#aperture-speed').val();
+    technicalReqs['angularField'] = $('#angular-field').val();
+    technicalReqs['focalLength'] = $('#focal-length').val();
+    technicalReqs['imageQuality'] = $('#image-quality').val();
+    technicalReqs['backFocalDistance'] = $('#backfocal-distance').val();
+    technicalReqs['entrancePupilPosition'] = $('#entrance-pupil-position').val();
+    technicalReqs['waveLengths[0]'] = $('#spectral-range-min').val();
+    technicalReqs['waveLengths[1]'] = $('#spectral-range-max').val();
   };
 
   /**
@@ -63,7 +63,7 @@ var dashboard = (function(){
       if($.isArray(schemas) && schemas.length > 0) {
         $('#schemas-area').append(
           '<table id="schemas-list" class="table table-striped">' +
-            '<thead><tr><th>#</th><th>Schema</th></tr></thead>' +
+            '<thead><tr><th>#</th><th>Scheme</th></tr></thead>' +
           '</table>'
         );
         var schemas_list = $('#schemas-list');
@@ -75,7 +75,7 @@ var dashboard = (function(){
           '</tr>');
         });
       } else {
-        $('#schemas-area').append('<h4 id="schemas-list">No schemas</h4>');
+        $('#schemas-area').append('<h4 id="schemas-list">No schemes</h4>');
       }
     }
   }

@@ -7,7 +7,10 @@
   #{script 'jquery-1.7.2.min.js'/}
   #{script 'bootstrap-button.js'/}
   #{script 'bootstrap-modal.js'/}
+  #{script 'bootstrap-tooltip.js'/}
+  #{script 'bootstrap-popover.js'/}
   #{script 'dashboard.js'/}
+  #{script 'popovers.js'/}
 #{/set}
 <div class="container-fluid">
   <div class="navbar">
@@ -34,43 +37,50 @@
         <fieldset>
           <legend>Technical requirements</legend>
           <div class="control-group">
-            <label class="control-label with-help" for="apertureSpeed">aperture speed
-            <i class="icon-question-sign"></i>
+            <label class="control-label with-help" for="aperture-speed">aperture speed
+              <i id="aperture-speed-help" class="icon-question-sign"></i>
             </label>
             <div class="controls">
-              <input class="input-small" id="apertureSpeed" type="number" required="true"/>
+              <input class="input-small" id="aperture-speed" type="number" required="true"/>
             </div>
           </div>
           <div class="control-group">
-            <label class="control-label" for="angularField">angular field<i class="icon-question-sign"></i></label>
+            <label class="control-label" for="angular-field">angular field
+              <i id="angular-field-help" class="icon-question-sign"></i>
+            </label>
             <div class="controls">
               <div class="input-append">
-                <input class="input-small" id="angularField" type="number" required="true"/><span class="add-on">&#176;</span>
+                <input class="input-small" id="angular-field" type="number" required="true"/><span class="add-on">&#176;</span>
               </div>
             </div>
           </div>
           <div class="control-group">
-            <label class="control-label" for="focalLength">focal length<i class="icon-question-sign"></i></label>
+            <label class="control-label" for="focal-length">focal length
+              <i id="focal-length-help" class="icon-question-sign"></i>
+            </label>
             <div class="controls">
               <div class="input-append">
-                <input class="input-small" id="focalLength" type="number" required="true"/><span class="add-on">mm.</span>
+                <input class="input-small" id="focal-length" type="number" required="true"/><span class="add-on">mm.</span>
               </div>
             </div>
           </div>
           <div class="control-group">
-            <label class="control-label" for="backFocalDistance">back focal distance<i class="icon-question-sign"></i></label>
+            <label class="control-label" for="backfocal-distance">back focal distance
+              <i id="backfocal-distance-help" class="icon-question-sign"></i>
+            </label>
             <div class="controls">
               <div class="input-append">
-                <input class="input-small" id="backFocalDistance" type="number" required="true"/><span class="add-on">mm.</span>
+                <input class="input-small" id="backfocal-distance" type="number" required="true"/><span class="add-on">mm.</span>
               </div>
             </div>
           </div>
           <div class="control-group">
-            <label class="control-label" for="imageQuality">image quality
-            <i class="icon-question-sign"></i></label>
+            <label class="control-label" for="image-quality">image quality
+              <i id="image-quality-help" class="icon-question-sign"></i>
+            </label>
             <div class="controls">
               #{select 'requirements.imageQuality', class: "input-medium",
-                id: "imageQuality",
+                id: "image-quality",
                 items:ru.ifmo.ailab.e3soos.facts.Requirements.ImageQuality.values(),
                 labelProperty: 'name',
                 valueProperty: 'name',
@@ -79,10 +89,12 @@
             </div>
           </div>
           <div class="control-group">
-            <label class="control-label" for="entrancePupilPosition">entrance pupil position<i class="icon-question-sign"></i></label>
+            <label class="control-label" for="entrance-pupil-position">entrance pupil position
+              <i id="entrance-pupil-position-help" class="icon-question-sign"></i>
+            </label>
             <div class="controls">
               #{select 'requirements.entrancePupilPosition', class: "input-medium",
-              id: "entrancePupilPosition",
+              id: "entrance-pupil-position",
               items:ru.ifmo.ailab.e3soos.facts.Requirements.EntrancePupilPosition.values(),
               labelProperty: 'name',
               valueProperty: 'name',
@@ -91,13 +103,14 @@
             </div>
           </div>
           <div class="control-group">
-            <label class="control-label" for="spectralRange-min">spectral range
-            <i class="icon-question-sign"></i></label>
+            <label class="control-label" for="spectral-range-min">spectral range
+              <i id="spectral-range-help" class="icon-question-sign"></i>
+            </label>
             <div class="controls">
               <div class="input-append">
-                <input class="input-mini" id="spectralRange-min" type="number"
+                <input class="input-mini" id="spectral-range-min" type="number"
                       placeholder="min." required="true"/>
-                <input class="input-mini" id="spectralRange-max" type="number"
+                <input class="input-mini" id="spectral-range-max" type="number"
                       placeholder="max." required="true"/><span class="add-on">nm.</span>
               </div>
             </div>
@@ -109,7 +122,6 @@
         <div class="center-text">
           <button id="btn-classify" class="btn btn-primary">Classify</button>
           <button id="btn-synthesis" class="btn btn-primary">Synthesize</button>
-          <button class="btn">Export</button>
           <button id="debug" class="btn btn-mini" data-toggle="button">Debug</button>
         </div>
       </div>

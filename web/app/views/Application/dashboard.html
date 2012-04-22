@@ -117,14 +117,18 @@
           </div>
         </fieldset>
       </form>
+      <!-- Actions -->
       <div>
         <legend>Actions</legend>
         <div class="center-text">
           <button id="btn-classify" class="btn btn-primary">Classify</button>
           <button id="btn-synthesis" class="btn btn-primary">Synthesize</button>
+          #{if user.hasRole("admin")}
           <button id="debug" class="btn btn-mini" data-toggle="button">Debug</button>
+          #{/if}
         </div>
       </div>
+      <!-- end Actions -->
     </div>
     <div class="span8">
       <div>

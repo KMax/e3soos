@@ -13,19 +13,26 @@ $(document).ready(function(){
   $('#debug').button();
 });
 
+/**
+ * Utility module.
+ */
+var utils = (function(){
+  return {
+    toParam :function(object, keyPrefix) {
+      var tmp = {};
+      $.each(object, function(key, value) {
+              tmp[keyPrefix + key] = value;
+            });
+      return $.param(tmp);
+    }
+  };
+})();
+
 var dashboard = (function(){
 
   var classification = {};
   var technicalReqs = {};
   var schemas = [];
-
-  var toParam = function(object, keyPrefix) {
-    var tmp = {};
-    $.each(object, function(key, value) {
-            tmp[keyPrefix + key] = value;
-          });
-    return $.param(tmp);
-  }
 
   /**
    * Reads technical requirements from the DOM tree and saves them.
@@ -39,6 +46,15 @@ var dashboard = (function(){
     technicalReqs['entrancePupilPosition'] = $('#entrance-pupil-position').val();
     technicalReqs['waveLengths[0]'] = $('#spectral-range-min').val();
     technicalReqs['waveLengths[1]'] = $('#spectral-range-max').val();
+  };
+
+  /**
+   * Gets if debug mode is enabled or not.
+   * @return true or false
+   */
+  var isDebugMode = function() {
+    var debug = $('#debug');
+    return debug.size() != 0 && debug.is('.active');
   };
 
   /**
@@ -63,7 +79,9 @@ var dashboard = (function(){
       if($.isArray(schemas) && schemas.length > 0) {
         $('#schemas-area').append(
           '<table id="schemas-list" class="table table-striped">' +
-            '<thead><tr><th>#</th><th>Scheme</th></tr></thead>' +
+            '<thead><tr><th>#</th><th>Scheme '
+            +'<a href="#"><i id="aperture-speed-help" class="icon-question-sign"></i></a>'
+            +'</th></tr></thead>' +
           '</table>'
         );
         var schemas_list = $('#schemas-list');
@@ -82,7 +100,30 @@ var dashboard = (function(){
 
   var removeSchemas = function() {
     $('#schemas-list').detach();
+  };
+
+  var afterClassificationFinished = function() {
+    writeClassification();
+  };
+
+  var afterSynthesisFinished = function(data) {
+    schemas = data;
+    removeSchemas();
+    writeSchemas();
   }
+
+  var beforeSendRequest = function() {
+    progressbar.show();
+  };
+
+  var afterRequestCompleted = function() {
+    setTimeout(
+      function(){
+        progressbar.hide();
+      },
+      700
+    );
+  };
 
   /**
    * Public methods and variables.
@@ -90,48 +131,63 @@ var dashboard = (function(){
   return {
     classify: function() {
       readTechnicalReqs();
-      progressbar.show();
+      beforeSendRequest();
       $.getJSON(
-        '/classify?' + toParam(technicalReqs, 'requirements.'),
+        '/classify?' + utils.toParam(technicalReqs, 'requirements.'),
         function(data) {
           classification = data;
-          writeClassification();
-          setTimeout(function(){
-            progressbar.hide();
-          }, 700);
+          afterClassificationFinished();
+          afterRequestCompleted();
         }
       );
     },
     synthesis: function() {
       if(!jQuery.isEmptyObject(classification)) {
-        delete classification.R;
-        progressbar.show();
-        $.getJSON(
-          '/synthesis?' + toParam(classification, 'classification.'),
-          function(data) {
-            schemas = data;
-
-            removeSchemas();
-            writeSchemas();
-            setTimeout(function(){
-              progressbar.hide();
-            }, 700);
-          }
-        );
+        delete classification.r;
+        beforeSendRequest();
+        if(isDebugMode()) {
+          $.getJSON(
+            '/debug/synthesis?' + utils.toParam(classification, 'classification.'),
+            function(data) {
+              console.log("debug mode is on");
+              console.log(data);
+              afterSynthesisFinished(data); //FIXME
+              afterRequestCompleted();
+            }
+          );
+        } else {
+          $.getJSON(
+            '/synthesis?' + utils.toParam(classification, 'classification.'),
+            function(data) {
+              console.log("debug mode is off");
+              afterSynthesisFinished(data);
+              afterRequestCompleted();
+            }
+          );
+        }
       }
     }
   };
 
 })();
 
+/**
+ * Progress bar.
+ */
 var progressbar = (function() {
 
+  /**
+   * Creates the DOM representation of the progress bar.
+   */
   var createDOM = function() {
     $('body').append('<div id="progressbar" class="modal fade">'
       + '<div class="modal-header"><h3>Please, waiting...</h3></div>'
       +'</div>');
   }
 
+  /**
+   * Removes the DOM representation of the progress bar.
+   */
   var removeDOM = function() {
     $('#progressbar').detach();
   }

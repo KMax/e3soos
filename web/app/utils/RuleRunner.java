@@ -80,4 +80,29 @@ public abstract class RuleRunner {
         }
         return schemas;
     }
+
+    public static Result<List<Schema>> synthesisWithLog(
+            final Classification classification) {
+        Result<List<Schema>> result = new Result();
+        result.setData(new ArrayList<Schema>());
+
+        StatelessKnowledgeSession session = kbSynthesis.newStatelessKnowledgeSession();
+        session.addEventListener(new RuleFiringLogger());
+        session.addEventListener(new WorkingMemoryListener());
+        
+        List cmds = new ArrayList();
+        cmds.add(CommandFactory.newInsert(classification));
+        cmds.add(CommandFactory.newFireAllRules());
+        cmds.add(CommandFactory.newQuery("getSchemas", "get the all schemas"));
+
+        ExecutionResults results = (ExecutionResults) session.execute(
+                CommandFactory.newBatchExecution(cmds));
+
+        NativeQueryResults schemasResults = (NativeQueryResults) results.
+                getValue("getSchemas");
+        for(QueryResultsRow row : schemasResults) {
+            result.getData().add((Schema)row.get("schema"));
+        }
+        return result;
+    }
 }

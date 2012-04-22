@@ -27,7 +27,7 @@ public class Application extends Controller {
         badRequest();
     }
 
-    public static void synthesis(Classification classification) throws InterruptedException {
+    public static void synthesis(Classification classification) {
         if(classification != null) {
             List<String> schemes = new ArrayList<String>();
             for(Schema schema : RuleRunner.synthesis(classification)) {
@@ -36,6 +36,10 @@ public class Application extends Controller {
             renderJSON(schemes);
         }
         badRequest();
+    }
+
+    public static void synthesisInDetail(Classification classification) {
+        synthesis(classification);
     }
 
 }

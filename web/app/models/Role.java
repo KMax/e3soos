@@ -12,20 +12,24 @@ import play.db.jpa.Model;
  */
 @Entity
 public class Role extends Model {
-    
+
     @Required
     public String role;
-    
+
     @ManyToMany(mappedBy="roles")
     public List<User> users;
-    
+
     public Role(final String r) {
         this.role = r;
+    }
+
+    public String getName() {
+        return role;
     }
 
     @Override
     public String toString() {
         return this.role;
     }
-    
+
 }

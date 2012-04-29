@@ -1,20 +1,20 @@
 package utils;
 
+import java.util.List;
 import java.util.Map;
+import logs.Firing;
 
 /**
  *
  * @author Maxim Kolchin
  */
-public class Result<T> {
+public class Result {
 
-    private T data;
+    private List<String> data;
+    private Map<String, Firing> logs;
 
-    public void setData(final T data) {
-        this.data = data;
-    }
-
-    public T getData() {
-        return data;
+    public Result(final List<String> d, final Map<String, Firing> ls) {
+        this.data = d;
+        this.logs = ls;
     }
 }

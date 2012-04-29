@@ -149,9 +149,8 @@ var dashboard = (function(){
           $.getJSON(
             '/debug/synthesis?' + utils.toParam(classification, 'classification.'),
             function(data) {
-              console.log("debug mode is on");
-              console.log(data);
-              afterSynthesisFinished(data); //FIXME
+              debugwindow.open(data.logs);
+              afterSynthesisFinished(data.data);
               afterRequestCompleted();
             }
           );
@@ -159,7 +158,6 @@ var dashboard = (function(){
           $.getJSON(
             '/synthesis?' + utils.toParam(classification, 'classification.'),
             function(data) {
-              console.log("debug mode is off");
               afterSynthesisFinished(data);
               afterRequestCompleted();
             }
@@ -209,5 +207,33 @@ var progressbar = (function() {
       $('#progressbar').modal('hide');
       removeDOM();
     }
-  } ;
+  };
+})();
+
+var debugwindow = (function(){
+
+  var window = $('<div></div>').
+    dialog({
+      autoOpen: false,
+      title: 'Debug window',
+      width: 'auto'
+    });
+
+  return {
+    open: function(logs) {
+      window.empty();
+      var html = '<table class="table table-striped">'
+        + '<thead><tr><th>Package</th><th>Rule</th><th>Facts fired a rule</th></tr></thead>';
+      $.each(logs, function(index, value){
+        html += '<tr><td>' +value.packageName +'</td><td>' + value.ruleName
+          + '</td><td>' + value.facts + '</td></tr>';
+      });
+      html += '</table>';
+      window.html(html);
+      window.dialog('open');
+    },
+    close: function() {
+      window.dialog('close');
+    }
+  };
 })();

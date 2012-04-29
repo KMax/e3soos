@@ -9,6 +9,7 @@ import play.mvc.With;
 import ru.ifmo.ailab.e3soos.facts.Classification;
 import ru.ifmo.ailab.e3soos.facts.Requirements;
 import ru.ifmo.ailab.e3soos.facts.Schema;
+import utils.Result;
 import utils.RuleRunner;
 
 @With(Secure.class)
@@ -39,7 +40,12 @@ public class Application extends Controller {
     }
 
     public static void synthesisInDetail(Classification classification) {
-        synthesis(classification);
+        if(classification != null) {
+            Result result =
+                    RuleRunner.synthesisWithLog(classification);
+            renderJSON(result);
+        }
+        badRequest();
     }
 
 }

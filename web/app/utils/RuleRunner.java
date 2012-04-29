@@ -1,7 +1,11 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import logs.AgendaLogger;
+import logs.WorkingMemoryLogger;
 import org.drools.KnowledgeBase;
 import org.drools.agent.KnowledgeAgent;
 import org.drools.agent.KnowledgeAgentConfiguration;
@@ -81,15 +85,14 @@ public abstract class RuleRunner {
         return schemas;
     }
 
-    public static Result<List<Schema>> synthesisWithLog(
+    public static Result synthesisWithLog(
             final Classification classification) {
-        Result<List<Schema>> result = new Result();
-        result.setData(new ArrayList<Schema>());
+        ArrayList<String> schemas = new ArrayList<String>();
 
         StatelessKnowledgeSession session = kbSynthesis.newStatelessKnowledgeSession();
-        session.addEventListener(new RuleFiringLogger());
-        session.addEventListener(new WorkingMemoryListener());
-        
+        AgendaLogger alogger = new AgendaLogger();
+        session.addEventListener(alogger);
+
         List cmds = new ArrayList();
         cmds.add(CommandFactory.newInsert(classification));
         cmds.add(CommandFactory.newFireAllRules());
@@ -101,8 +104,10 @@ public abstract class RuleRunner {
         NativeQueryResults schemasResults = (NativeQueryResults) results.
                 getValue("getSchemas");
         for(QueryResultsRow row : schemasResults) {
-            result.getData().add((Schema)row.get("schema"));
+            schemas.add(((Schema)row.get("schema")).toString());
         }
+        System.out.println(Arrays.toString(schemas.toArray()));
+        Result result = new Result(schemas, alogger.getFirings());
         return result;
     }
 }

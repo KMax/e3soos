@@ -121,6 +121,7 @@ public class Classification {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "[J:" + j + ",W:" + w + ",F:" + f + ",L:" + l + ",Q:" + q
+                + ",S:" + s + ",D:" + d + ",R:" + getR() + "]";
     }
 }

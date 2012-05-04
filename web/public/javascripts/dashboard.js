@@ -33,6 +33,7 @@ var dashboard = (function(){
   var classification = {};
   var technicalReqs = {};
   var schemas = [];
+  var images = [];
 
   /**
    * Reads technical requirements from the DOM tree and saves them.
@@ -78,19 +79,27 @@ var dashboard = (function(){
     if(!$('#schemas-list').length > 0) {
       if($.isArray(schemas) && schemas.length > 0) {
         $('#schemas-area').append(
-          '<table id="schemas-list" class="table table-striped">' +
-            '<thead><tr><th>#</th><th>Scheme '
+          '<table id="schemas-list" class="table table-bordered">' +
+            '<thead><tr><th>#</th><th>Scheme</th>'
+            + '<th>Code '
             +'<a href="#"><i id="aperture-speed-help" class="icon-question-sign"></i></a>'
-            +'</th></tr></thead>' +
-          '</table>'
+            + '</th></tr></thead>'
+          +'</table>'
         );
         var schemas_list = $('#schemas-list');
         $.each(schemas, function(index) {
           schemas_list.append(
-          '<tr>' +
-            '<td>' + index +'</td>' +
-            '<td>' + schemas[index] +'</td>' +
-          '</tr>');
+          '<tr>'
+            + '<td>' + index +'</td>'
+            + '<td id="scheme_' + index +'"></td>'
+            + '<td>' + schemas[index] + '</td>'
+           + '</tr>');
+         images[index] = new Drawing.Scheme({
+           container: 'scheme_' + index,
+           elements: schemas[index].split(' + '),
+           interval: 10
+         });
+         images[index].draw();
         });
       } else {
         $('#schemas-area').append('<h4 id="schemas-list">No schemes</h4>');

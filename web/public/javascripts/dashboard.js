@@ -2,8 +2,13 @@
  * Initializes the code
  */
 $(document).ready(function(){
-    $('#btn-synthesis').click(function(event){
-        dashboard.synthesis();
+    $('#btn-synthesis').click(function (event) {
+        if(validator.validate($('#tech-reqs-form')) && validator.validate($('#spectral-range-min:parent'))){
+            dashboard.synthesis();
+        }
+        event.preventDefault();
+    });
+    $('#debug').click(function (event) {
         event.preventDefault();
     });
     $('#debug').button();
@@ -32,8 +37,8 @@ var dashboard = (function () {
     var images = [];
 
     /**
-   * Reads technical requirements from the DOM tree and saves them.
-   */
+    * Reads technical requirements from the DOM tree and saves them.
+    */
     var readTechnicalReqs = function () {
         technicalReqs.apertureSpeed = $('#aperture-speed').val();
         technicalReqs.angularField = $('#angular-field').val();
@@ -46,9 +51,9 @@ var dashboard = (function () {
     };
 
     /**
-   * Gets if debug mode is enabled or not.
-   * @return true or false
-   */
+    * Gets if debug mode is enabled or not.
+    * @return true or false
+    */
     var isDebugMode = function() {
         var debug = $('#debug');
         return debug.size() != 0 && debug.is('.active');
@@ -226,4 +231,42 @@ var debugwindow = (function(){
             window.dialog('close');
         }
     };
+})();
+
+var validator = (function () {
+
+    var isEmptyString = function (value) {
+        var tmp = $.trim(value);
+        if(tmp == "" || tmp == undefined || tmp == null) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    var isValid = function(element) {
+        if(element.attr('requred') == "true" && isEmptyString(element.val())) {
+                return false;
+        }
+        if(element.attr('type') == "number" && !$.isNumeric(element.val())) {
+            return false;
+        }
+        return true;
+    };
+
+    return {
+        validate: function(form) {
+            var flag = true;
+            form.find('*:input').each(function () {
+                var control_group = $(this).parents('.control-group');
+                if(!isValid($(this))) {
+                    $(control_group).addClass('error');
+                    flag = false;
+                } else {
+                    $(control_group).removeClass('error');
+                }
+            });
+            return flag;
+        }
+    }
 })();

@@ -2,10 +2,8 @@ package utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import logs.AgendaLogger;
-import logs.WorkingMemoryLogger;
 import org.drools.KnowledgeBase;
 import org.drools.agent.KnowledgeAgent;
 import org.drools.agent.KnowledgeAgentConfiguration;
@@ -68,7 +66,6 @@ public abstract class RuleRunner {
 	}
 
     public static List<Schema> synthesis(final Classification classification) {
-        List<Schema> schemas = new ArrayList<Schema>();
         StatelessKnowledgeSession session = kbSynthesis.newStatelessKnowledgeSession();
         List cmds = new ArrayList();
         cmds.add(CommandFactory.newInsert(classification));
@@ -79,16 +76,14 @@ public abstract class RuleRunner {
                 CommandFactory.newBatchExecution(cmds));
 
         NativeQueryResults schemasResults = (NativeQueryResults) results.getValue("getSchemas");
+        List<Schema> schemas = new ArrayList<Schema>();
         for(QueryResultsRow row : schemasResults) {
             schemas.add((Schema)row.get("schema"));
         }
         return schemas;
     }
 
-    public static Result synthesisWithLog(
-            final Classification classification) {
-        ArrayList<String> schemas = new ArrayList<String>();
-
+    public static Result synthesisWithLogs(final Classification classification) {
         StatelessKnowledgeSession session = kbSynthesis.newStatelessKnowledgeSession();
         AgendaLogger alogger = new AgendaLogger();
         session.addEventListener(alogger);
@@ -103,11 +98,13 @@ public abstract class RuleRunner {
 
         NativeQueryResults schemasResults = (NativeQueryResults) results.
                 getValue("getSchemas");
+        ArrayList<String> schemas = new ArrayList<String>();
         for(QueryResultsRow row : schemasResults) {
             schemas.add(((Schema)row.get("schema")).toString());
         }
-        System.out.println(Arrays.toString(schemas.toArray()));
-        Result result = new Result(schemas, alogger.getFirings());
+        Result result = new Result();
+        result.setLogs(alogger.getFirings());
+        result.setData("schemes", schemas);
         return result;
     }
 }

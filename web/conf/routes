@@ -9,9 +9,8 @@
 # Home page
 *       /                                       Index.index
 *       /dashboard                              Application.dashboard
-GET     /classify                               Application.classify
 GET     /synthesis                              Application.synthesis
-GET     /debug/synthesis                        Application.synthesisInDetail
+GET     /debug/synthesis                        Application.synthesisWithLogs
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

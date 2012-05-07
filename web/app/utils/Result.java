@@ -1,6 +1,6 @@
 package utils;
 
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 import logs.Firing;
 
@@ -10,11 +10,17 @@ import logs.Firing;
  */
 public class Result {
 
-    private List<String> data;
+    private Map<String, Object> data = new HashMap<String, Object>();
     private Map<String, Firing> logs;
 
-    public Result(final List<String> d, final Map<String, Firing> ls) {
-        this.data = d;
-        this.logs = ls;
+    public Result() {
+    }
+
+    public void setLogs(final Map<String, Firing> logs) {
+        this.logs = logs;
+    }
+
+    public void setData(final String key, Object data) {
+        this.data.put(key, data);
     }
 }

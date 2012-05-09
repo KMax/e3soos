@@ -3,7 +3,7 @@
  */
 $(document).ready(function(){
     $('#btn-synthesis').click(function (event) {
-        if(validator.validate($('#tech-reqs-form')) && validator.validate($('#spectral-range-min:parent'))){
+        if(validator.validate($('#tech-reqs-form'))){
             dashboard.synthesis();
         }
         event.preventDefault();

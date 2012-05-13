@@ -49,7 +49,10 @@
             <li>
                 <a href="@{Application.synthesis()}">relay system</a>
             </li>
-            #{if}
+            #{if user.hasRole("admin")}
+            <li class="nav-header">Admin</li>
+            <li><a href="http://guvnor.ailab.ifmo.ru/main"><i class="icon-book"></i> Guvnor</a></li>
+            <li><a href="/admin"><i class="icon-cog"></i> Admin panel</a></li>
             #{/if}
         </ul>
     </div>

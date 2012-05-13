@@ -13,7 +13,7 @@ public class Security extends Secure.Security {
     }
 
     static void onAuthenticated() {
-        redirect("Index.index");
+        redirect("Application.dashboard");
     }
 
     static void onDisconnected(){

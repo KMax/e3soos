@@ -73,28 +73,112 @@ var dashboard = (function () {
         $('#class-R').text(classification.r);
     };
 
+    var saveScheme = function (code, onsuccess, onerror) {
+        $.post('/scheme', {"code" : code})
+        .success(function(id) {onsuccess(id);})
+        .error(function() {onerror();});
+    };
+
+    var deleteScheme = function (id, onsuccess, onerror) {
+        $.ajax({
+            url: '/scheme/' + id,
+            type: 'DELETE',
+            success: function() {onsuccess();},
+            error: function() {onerror();}
+        });
+    };
+
+    var initSchemeEventHandlers = function () {
+
+        var saveMessage = 'Save'
+            , savedMessage = '<i class="icon-ok icon-white"></i> Saved'
+            , deleteMessage = '<i class="icon-remove icon-white"></i> Delete'
+            , savingMessage = 'Saving...'
+            , deletingMessage = 'Deleting...'
+            , d = 'disabled';
+
+        $('#scheme-list .scheme button').click(function () {
+            var button = $(this);
+            var parent = button.parents('.scheme');
+
+            if(button.hasClass('btn-warning') && parent.attr('data-scheme-id') != undefined) {
+                //Delete a scheme
+                button.attr(d,d).addClass(d).html(deletingMessage);
+                deleteScheme(parent.attr('data-scheme-id'),
+                    function() {
+                        //On success
+                        button.removeClass('btn-warning');
+                        button.removeClass(d).removeAttr(d).html(saveMessage);
+                    },
+                    function () {
+                        //On error
+                        button.removeClass(d).removeAttr(d).html(saveMessage);
+                    }
+                );
+            } else {
+                //Save a scheme
+                button.addClass('btn-success').attr(d, d).addClass(d).html(savingMessage);
+
+                saveScheme(schemas[parent.attr('data-scheme-index')],
+                    function(id) {
+                        //On success
+                        parent.attr('data-scheme-id', id);
+                        button.removeClass(d).removeAttr(d).html(savedMessage);
+                    },
+                    function() {
+                        //On error
+                        button.removeClass(d).removeAttr(d).html(saveMessage);
+                    }
+                );
+            }
+        });
+        $('#scheme-list .scheme button').hover(
+            function() {
+                var button = $(this);
+                if(button.parents('.scheme').attr('data-scheme-id') != undefined
+                    && button.hasClass('btn-success')
+                    && !button.hasClass('disabled')) {
+                    button.removeClass('btn-success')
+                    .addClass('btn-warning')
+                    .html(deleteMessage);
+                }
+            },
+            function() {
+                var button = $(this);
+                if(button.parents('.scheme').attr('data-scheme-id') != undefined
+                    && button.hasClass('btn-warning')
+                    && !button.hasClass('disabled')) {
+                    button.removeClass('btn-warning')
+                    .addClass('btn-success')
+                    .html(savedMessage);
+                }
+            }
+        );
+    };
+
     /**
-   * Writes the schema objects in DOM tree.
-   */
-    var writeSchemas = function() {
-        if(!$('#schemas-list').length > 0) {
+    * Writes the schema objects in DOM tree.
+    */
+    var writeSchemas = function () {
+        if(!$('#scheme-list').length > 0) {
+            var schemes_area = $('#schemas-area');
             if($.isArray(schemas) && schemas.length > 0) {
-                $('#schemas-area').append(
-                    '<table id="schemas-list" class="table table-bordered">' +
-                    '<thead><tr><th>#</th><th>Scheme</th>'
-                    + '<th>Code '
-                    +'<a href="#"><i id="aperture-speed-help" class="icon-question-sign"></i></a>'
-                    + '</th></tr></thead>'
-                    +'</table>'
+                schemes_area.append(
+                    '<div id="scheme-list"></div>'
                     );
-                var schemas_list = $('#schemas-list');
+                var schemas_list = $('#scheme-list');
                 $.each(schemas, function (index) {
                     schemas_list.append(
-                        '<tr>'
-                        + '<td>' + index +'</td>'
-                        + '<td id="scheme_' + index +'"></td>'
-                        + '<td>' + schemas[index] + '</td>'
-                        + '</tr>');
+                        '<div class="scheme" data-scheme-index="' + index + '">'
+                        + '<div>'
+                        + '<p class="scheme-number">#' + (index + 1) + '</p>'
+                        + '<button class="btn btn-mini">Save</button>'
+                        + '</div>'
+                        + '<div id="scheme_' + index + '" class="scheme-image"></div>'
+                        + '<div class="scheme-code">' + schemas[index]
+                        + ' <i class="icon-question-sign"></i>'
+                        +'</div>'
+                        + '</div>');
                     images[index] = new Drawing.Scheme({
                         container: 'scheme_' + index,
                         elements: schemas[index].split(' + '),
@@ -102,8 +186,10 @@ var dashboard = (function () {
                     });
                     images[index].draw();
                 });
+                schemes_area.height($(window).height() - $('#general-chs').height() - 150);
+                initSchemeEventHandlers();
             } else {
-                $('#schemas-area').append('<h4 id="schemas-list">No schemes</h4>');
+                schemes_area.append('<h4 id="scheme-list">No schemes</h4>');
             }
         }
     };
@@ -129,13 +215,13 @@ var dashboard = (function () {
             function(){
                 progressbar.hide();
             },
-            700
+            500
             );
     };
 
     /**
-   * Public methods and variables.
-   */
+    * Public methods and variables.
+    */
     return {
         synthesis: function () {
             readTechnicalReqs();

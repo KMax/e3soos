@@ -11,6 +11,8 @@
 *       /dashboard                              Application.dashboard
 GET     /synthesis                              Application.synthesis
 GET     /debug/synthesis                        Application.synthesisWithLogs
+POST    /scheme                                 Application.saveScheme
+DELETE  /scheme/{<[0-9]+>id}                    Application.deleteScheme
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import models.ClassificationSerializer;
+import models.SavedScheme;
 import models.User;
 import play.mvc.Controller;
 import play.mvc.With;
@@ -51,6 +52,25 @@ public class Application extends Controller {
             result.setData("classification", classification);
             renderJSON(result, new ClassificationSerializer());
         }
+        badRequest();
+    }
+
+    public static void saveScheme(String code) throws InterruptedException {
+        if(code != null && !code.isEmpty()) {
+            User user = User.find("byEmail", Security.connected()).first();
+            SavedScheme scheme = new SavedScheme(user, code);
+            scheme.save();
+            Thread.sleep(5000);
+            renderJSON(scheme.id);
+        }
+        badRequest();
+    }
+
+    public static void deleteScheme(long id) throws InterruptedException {
+        SavedScheme scheme = SavedScheme.findById(id);
+        scheme.delete();
+        Thread.sleep(5000);
+        ok();
         badRequest();
     }
 }

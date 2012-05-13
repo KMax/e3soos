@@ -1,21 +1,17 @@
 #{extends 'main.html' /}
 
 #{set 'moreStyles'}
-#{stylesheet 'dashboard.css' /}
-#{stylesheet 'smoothness/jquery-ui-1.8.19.custom.css'/}
+    #{stylesheet 'dashboard.css' /}
+    #{stylesheet 'smoothness/jquery-ui-1.8.19.custom.css'/}
 #{/set}
 #{set 'moreScripts'}
-#{script 'jquery-1.7.2.min.js'/}
-#{script 'jquery-ui-1.8.19.custom.min.js'/}
-#{script 'bootstrap-button.js'/}
-#{script 'bootstrap-modal.js'/}
-#{script 'bootstrap-tooltip.js'/}
-#{script 'bootstrap-popover.js'/}
-#{script 'bootstrap-dropdown.js'/}
-#{script 'dashboard.js'/}
-#{script 'popovers.js'/}
-#{script 'drawing/kinetic-v3.9.4.min.js'/}
-#{script 'drawing/shapes/Scheme.js'/}
+    #{script 'jquery/jquery-1.7.2.min.js'/}
+    #{script 'jquery/jquery-ui-1.8.19.custom.min.js'/}
+    #{script 'bootstrap/bootstrap.js'/}
+    #{script 'dashboard.js'/}
+    #{script 'popovers.js'/}
+    #{script 'drawing/kinetic-v3.9.4.min.js'/}
+    #{script 'drawing/shapes/Scheme.js'/}
 #{/set}
 <div class="container-fluid">
     <div class="navbar">
@@ -138,7 +134,7 @@
             </form>
         </div>
         <div class="span8">
-            <div>
+            <div id="general-chs">
                 <legend>General characteristics</legend>
                 <div class="row-fluid">
                     <div class="span3 center-text">
@@ -169,8 +165,9 @@
                     </div>
                 </div>
             </div>
-            <div id="schemas-area">
+            <div>
                 <legend>Structural schemes</legend>
+                <div id="schemas-area"></div>
             </div>
         </div>
     </div>

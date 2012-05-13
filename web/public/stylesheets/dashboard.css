@@ -12,5 +12,33 @@ span[id^="class-"] {
 }
 
 #schemas-area {
-  margin-top: 30px;
+    overflow-y: auto;
+}
+
+.scheme {
+    border: solid 1px #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 10px 10px 0;
+    box-shadow: 3px 3px 3px #ddd;
+}
+
+.scheme .scheme-image {
+    margin-left: 30px;
+}
+
+.scheme .scheme-code {
+    font-size: 14pt;
+    text-align: center;
+    padding: 5px;
+    border-top: solid 1px #ddd;
+}
+
+.scheme .scheme-number {
+    font-size: 12pt;
+    display: inline;
+}
+
+.scheme button {
+    float: right;
 }

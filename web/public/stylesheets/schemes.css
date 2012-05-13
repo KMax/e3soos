@@ -1,17 +1,4 @@
-.center-text {
-  text-align: center;
-}
-
-.class-name {
-  display: inline;
-  font-size: larger;
-}
-
-span[id^="class-"] {
-  font-size: larger;
-}
-
-#schemas-area {
+#scheme-area {
     overflow-y: auto;
 }
 
@@ -41,4 +28,8 @@ span[id^="class-"] {
 
 .scheme button {
     float: right;
+}
+
+#comment {
+    width: 98%;
 }

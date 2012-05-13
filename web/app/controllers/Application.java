@@ -7,6 +7,8 @@ import java.util.List;
 import models.ClassificationSerializer;
 import models.SavedScheme;
 import models.User;
+import play.db.jpa.NoTransaction;
+import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.With;
 import ru.ifmo.ailab.e3soos.facts.Classification;
@@ -26,12 +28,21 @@ public class Application extends Controller {
         gson = builder.create();
     }
 
+    @Transactional(readOnly=true)
     public static void dashboard() {
+        User user = User.find("byEmail", Security.connected()).first();
+        List<SavedScheme> schemes = SavedScheme.find("byUser", user).fetch();
+        render(user, schemes);
+    }
+
+    @Transactional(readOnly=true)
+    public static void synthesis() {
         User user = User.find("byEmail", Security.connected()).first();
         render(user);
     }
 
-    public static void synthesis(Requirements requirements) {
+    @NoTransaction
+    public static void runSynthesis(Requirements requirements) {
         if(requirements != null) {
             List<String> schemes = new ArrayList<String>();
             Classification classification = RuleRunner.classify(requirements);
@@ -44,7 +55,8 @@ public class Application extends Controller {
         badRequest();
     }
 
-    public static void synthesisWithLogs(Requirements requirements) {
+    @NoTransaction
+    public static void runSynthesisWithLogs(Requirements requirements) {
         if(requirements != null) {
             Classification classification = RuleRunner.classify(requirements);
 
@@ -55,12 +67,11 @@ public class Application extends Controller {
         badRequest();
     }
 
-    public static void saveScheme(String code) throws InterruptedException {
+    public static void saveScheme(String code, String comment) throws InterruptedException {
         if(code != null && !code.isEmpty()) {
             User user = User.find("byEmail", Security.connected()).first();
-            SavedScheme scheme = new SavedScheme(user, code);
+            SavedScheme scheme = new SavedScheme(user, code, comment);
             scheme.save();
-            Thread.sleep(5000);
             renderJSON(scheme.id);
         }
         badRequest();
@@ -69,7 +80,6 @@ public class Application extends Controller {
     public static void deleteScheme(long id) throws InterruptedException {
         SavedScheme scheme = SavedScheme.findById(id);
         scheme.delete();
-        Thread.sleep(5000);
         ok();
         badRequest();
     }

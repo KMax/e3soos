@@ -8,10 +8,11 @@
 
 # Home page
 *       /                                       Index.index
-*       /dashboard                              Application.dashboard
+GET     /dashboard                              Application.dashboard
 GET     /synthesis                              Application.synthesis
-GET     /debug/synthesis                        Application.synthesisWithLogs
-POST    /scheme                                 Application.saveScheme
+GET     /run/synthesis                          Application.runSynthesis
+GET     /debug/synthesis                        Application.runSynthesisWithLogs
+POST    /schemes                                Application.saveScheme
 DELETE  /scheme/{<[0-9]+>id}                    Application.deleteScheme
 
 # Ignore favicon requests

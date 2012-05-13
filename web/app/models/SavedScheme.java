@@ -20,12 +20,15 @@ public class SavedScheme extends Model {
     @Required
     public Date date;
 
+    public String comment;
+
     @Required
     public String scheme;
 
-    public SavedScheme(final User user, final String scheme) {
+    public SavedScheme(final User user, final String scheme, final String comment) {
         this.user = user;
         this.scheme = scheme;
+        this.comment = comment;
         this.date = new Date();
     }
 

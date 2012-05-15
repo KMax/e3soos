@@ -2,7 +2,7 @@ $(document).ready(function(){
     $('.scheme div[id^="scheme_"]').each(function(){
         var image = new Drawing.Scheme({
                         container: $(this).attr('id'),
-                        elements: $(this).parents('.scheme').attr('data-scheme-code').split(' + '),
+                        codes: $(this).parents('.scheme').attr('data-scheme-code').split(' + '),
                         interval: 10
                     });
         image.draw();

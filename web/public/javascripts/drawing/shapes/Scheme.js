@@ -31,138 +31,170 @@ Drawing.Element.prototype.defaults = {
 /**
  * A structural scheme.
  */
-Drawing.Scheme = function(config) {
+Drawing.Scheme = function(options) {
+    //Initialize options
+    this.options = {};
+    $.extend(this.options, this._defaults, options);
 
-  /**
-   * Private variables
-   */
-  var attrs = {
+    this.stage = new Kinetic.Stage({
+                    container: this.options.container,
+                    width: this.options.width,
+                    height: this.options.height
+                });
+
+    //Expand the options
+    this.options.centerX = this.stage.getWidth() / 2;
+    this.options.centerY = this.stage.getHeight() / 2;
+    this.options.endX = this.stage.getWidth() - this.options.xylinesStrokeWidth;
+    this.options.secondZoneWidth = this.options.elementWidth * 2 + this.options.interval * 2;
+    this.options.secondZSX = this.options.centerX - (this.options.secondZoneWidth / 2);
+    this.options.secondZEX = this.options.centerX + (this.options.secondZoneWidth / 2);
+    this.options.firstZSX = this.options.interval,
+    this.options.firstZEX = this.options.secondZSX,
+    this.options.thirdZSX = this.options.secondZEX,
+    this.options.thirdZEX = this.stage.getWidth() - this.options.interval;
+    this.options.zoneBottomY = (this.stage.getHeight() - this.options.xylinesStrokeWidth * 2) * 0.95;
+
+    this.layer = new Kinetic.Layer();
+    this.elements = [];
+};
+
+Drawing.Scheme.prototype._defaults = {
+    container: '',
+    codes: [],
     width: 400,
     height: 150,
     interval: 20,
-    xylinesWidth: 1
-  };
-  var stage = new Kinetic.Stage({
-        container: config.container,
-        width: attrs.width,
-        height: attrs.height
-      });
-  var layer = new Kinetic.Layer();
-  var elements = [];
+    xylinesStrokeWidth: 1,
+    xylinesStroke: "black",
+    elementWidth: 30
+};
 
-    /**
-    * Adds an optical element to the scene.
-    */
-    var _add = function (element) {
-        var y = (stage.getHeight() - element.shape.getHeight())/2,
-            secondZS = stage.getWidth()/2 - 50,
-            secondZE = stage.getWidth()/2 + 50;
-        var firstZS = attrs.interval,
-            firstZE = secondZS - attrs.interval,
-            thirdZS = secondZE + attrs.interval,
-            thirdZE = stage.getWidth() - attrs.interval;
-        var x = firstZS,
-            w = element.shape.getWidth();
-
-        if(element.attrs.firstZone == "1") {
-            if(elements.length > 0) {
-                var last = elements[elements.length - 1];
-                x = last.shape.getX() + last.shape.getWidth() + attrs.interval;
-            }
-            if(element.attrs.secondZone == "2") {
-                w = secondZS - x;
-            } else if(element.attrs.secondZone == "3") {
-                w = thirdZS - x;
-            }
-        } else if(element.attrs.firstZone == "2") {
-            x = secondZS + attrs.interval;
-            if(element.attrs.secondZone == "2") {
-                w = secondZE - secondZS;
-            } else if(element.attrs.secondZone == "3") {
-                w = thirdZS - x;
-            }
-        } else if(element.attrs.firstZone == "3") {
-            var last = elements[elements.length - 1];
-            if(last.shape.getX() > thirdZS) {
-                x = last.shape.getX() + last.shape.getWidth() + attrs.interval;
-            } else {
-                x = thirdZS + attrs.interval;
-            }
-        }
-
-        element.shape.setX(x);
-        element.shape.setWidth(w);
-        element.shape.setY(y);
-
-        elements.push(element);
-        layer.add(element.shape);
-    };
-
-  /**
-   * Draws helper lines.
-   */
-  var _drawXYLines = function() {
+Drawing.Scheme.prototype._createXYLines = function () {
     var xygroup = new Kinetic.Group();
 
-    var xline = new Kinetic.Line({
+    //XLine
+    xygroup.add(new Kinetic.Line({
       points: [
-        {x: 0, y: stage.getHeight()/2},
-        {x: stage.getWidth() - attrs.xylinesWidth, y: stage.getHeight()/2}
+          {x: 0, y: this.options.centerY},
+          {x: this.options.endX,y: this.options.centerY}
       ],
-      stroke: "black",
-      strokeWidth: 1
-    });
+      stroke: this.options.xylinesStroke,
+      strokeWidth: this.options.xylinesStrokeWidth
+    }));
 
-    var yline = new Kinetic.Line({
+    //YLine
+    xygroup.add(new Kinetic.Line({
       points: [
-        {x: stage.getWidth() - attrs.xylinesWidth, y: stage.getHeight()*0.25},
-        {x: stage.getWidth() - attrs.xylinesWidth, y: stage.getHeight()*0.75}
+        {x: this.options.endX, y: this.stage.getHeight() * 0.25},
+        {x: this.options.endX, y: this.stage.getHeight() * 0.75}
       ],
-      stroke: "black",
-      strokeWidth: 1
-    });
+      stroke: this.options.xylinesStroke,
+      strokeWidth: this.options.xylinesStrokeWidth
+    }));
 
-    var diaTop = new Kinetic.Line({
+    //DiaTop
+    xygroup.add(new Kinetic.Line({
       points: [
-        {x: stage.getWidth()/2, y: stage.getHeight()*0.3 },
-        {x: stage.getWidth()/2, y: stage.getHeight()*0.4 }
+        {x: this.options.centerX, y: this.stage.getHeight() * 0.3},
+        {x: this.options.centerX, y: this.stage.getHeight() * 0.4}
       ],
-      stroke: "black",
-      strokeWidth: 1
-    });
+      stroke: this.options.xylinesStroke,
+      strokeWidth: this.options.xylinesStrokeWidth
+    }));
 
-    var diaBottom = new Kinetic.Line({
+    //DiaBottom
+    xygroup.add(new Kinetic.Line({
       points: [
-        {x: stage.getWidth()/2, y: stage.getHeight()*0.7 },
-        {x: stage.getWidth()/2, y: stage.getHeight()*0.6 }
+        {x: this.options.centerX, y: this.stage.getHeight() * 0.7},
+        {x: this.options.centerX, y: this.stage.getHeight() * 0.6}
       ],
-      stroke: "black",
-      strokeWidth: 1
-    });
+      stroke: this.options.xylinesStroke,
+      strokeWidth: this.options.xylinesStrokeWidth
+    }));
 
-    xygroup.add(xline);
-    xygroup.add(yline);
-    xygroup.add(diaTop);
-    xygroup.add(diaBottom);
+    var secondZone = new Kinetic.Group();
+    secondZone.add(new Kinetic.Line({
+        points: [
+            {x: this.options.secondZSX, y: this.options.zoneBottomY},
+            {x: this.options.secondZEX, y: this.options.zoneBottomY}
+        ],
+        stroke: this.options.xylinesStroke,
+        strokeWidth: this.options.xylinesStrokeWidth
+    }));
+    secondZone.add(new Kinetic.Line({
+        points: [
+            {x: this.options.secondZSX, y: this.options.zoneBottomY},
+            {x: this.options.secondZSX, y: this.options.zoneBottomY * 0.95}
+        ],
+        stroke: this.options.xylinesStroke,
+        strokeWidth: this.options.xylinesStrokeWidth
+    }));
+    secondZone.add(new Kinetic.Line({
+        points: [
+            {x: this.options.secondZEX, y: this.options.zoneBottomY},
+            {x: this.options.secondZEX, y: this.options.zoneBottomY * 0.95}
+        ],
+        stroke: this.options.xylinesStroke,
+        strokeWidth: this.options.xylinesStrokeWidth
+    }));
 
-    layer.add(xygroup);
-  };
+    this.layer.add(xygroup);
+    this.layer.add(secondZone);
+};
 
-  /**
-  * Public methods and variables
-  */
-  return {
-    draw: function() {
+Drawing.Scheme.prototype._addElement = function (element) {
+    //The element's props
+    var y = (this.stage.getHeight() - element.shape.getHeight())/2,
+        x = this.options.firstZSX,
+        w = this.options.elementWidth;
 
-      _drawXYLines();
-
-      for(var i = 0; i < config.elements.length; i++) {
-        _add(new Drawing.Element({
-            code: config.elements[i]
-        }));
-      }
-
-      stage.add(layer);
+    var previous = undefined;
+    if(this.elements.length > 0){
+        previous = this.elements[this.elements.length - 1];
     }
-  };
+
+    if(element.attrs.firstZone == "1") {
+        if(previous != undefined) {
+            x = previous.shape.getX() + previous.shape.getWidth() + this.options.interval;
+        }
+        if(element.attrs.secondZone == "2") {
+            x = this.options.secondZSX - this.options.elementWidth / 2;
+        } else if(element.attrs.secondZone == "3") {
+            x = this.options.secondZSX - this.options.elementWidth / 2;
+            w = this.options.thirdZSX + (this.options.elementWidth / 2) - x;
+        }
+    } else if(element.attrs.firstZone == "2") {
+        x = this.options.secondZSX + this.options.interval;
+        if(element.attrs.secondZone == "2") {
+            x = this.options.centerX - this.options.elementWidth / 2;
+        } else if(element.attrs.secondZone == "3") {
+            x = this.options.secondZEX - this.options.elementWidth / 2;
+        }
+    } else if(element.attrs.firstZone == "3") {
+        x = this.options.thirdZSX + this.options.interval;
+        if(previous != undefined) {
+            if((previous.shape.getX() + previous.shape.getWidth()) > this.options.thirdZSX) {
+                x = previous.shape.getX() + previous.shape.getWidth() + this.options.interval;
+            }
+        }
+    }
+
+    //Set the element's props
+    element.shape.setX(x);
+    element.shape.setWidth(w);
+    element.shape.setY(y);
+
+    this.elements.push(element);
+    this.layer.add(element.shape);
+};
+
+Drawing.Scheme.prototype.draw = function() {
+    this._createXYLines();
+
+    for(var i = 0; i < this.options.codes.length; i++) {
+        this._addElement(new Drawing.Element({code: this.options.codes[i]}));
+    }
+
+    this.stage.add(this.layer);
 };

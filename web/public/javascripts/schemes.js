@@ -48,7 +48,7 @@ lib.schemes = (function () {
     var drawScheme = function (index, scheme) {
         new Drawing.Scheme({
             container: 'scheme_' + index,
-            elements: scheme.split(' + '),
+            codes: scheme.split(' + '),
             interval: 10
         })
         .draw();

@@ -1,34 +1,6 @@
 var Drawing = Drawing || {};
 
 /**
- * An optical element.
- */
-Drawing.Element = function (options) {
-
-    this.options = {};
-    $.extend(this.options, this.defaults, options);
-
-    this.attrs = {
-        type: this.options.code.charAt(0),
-        firstZone: this.options.code.charAt(1),
-        firstSurface: this.options.code.charAt(2),
-        secondZone: this.options.code.charAt(3),
-        secondSurface: this.options.code.charAt(4)
-    };
-
-    this.shape = new Kinetic.Rect(this.options);
-};
-
-Drawing.Element.prototype.defaults = {
-    code: 'B1A1A',
-    width: 30,
-    height: 100,
-    stroke: 'black',
-    strokeWidth: 1,
-    draggable: true
-};
-
-/**
  * A structural scheme.
  */
 Drawing.Scheme = function(options) {
@@ -67,7 +39,8 @@ Drawing.Scheme.prototype._defaults = {
     interval: 20,
     xylinesStrokeWidth: 1,
     xylinesStroke: "black",
-    elementWidth: 30
+    elementWidth: 30,
+    elementHeight: 100
 };
 
 Drawing.Scheme.prototype._createXYLines = function () {
@@ -145,7 +118,7 @@ Drawing.Scheme.prototype._createXYLines = function () {
 
 Drawing.Scheme.prototype._addElement = function (element) {
     //The element's props
-    var y = (this.stage.getHeight() - element.shape.getHeight())/2,
+    var y = (this.stage.getHeight() - element.getHeight()) / 2,
         x = this.options.firstZSX,
         w = this.options.elementWidth;
 
@@ -154,46 +127,50 @@ Drawing.Scheme.prototype._addElement = function (element) {
         previous = this.elements[this.elements.length - 1];
     }
 
-    if(element.attrs.firstZone == "1") {
+    if(element.getFirstZone() == "1") {
         if(previous != undefined) {
-            x = previous.shape.getX() + previous.shape.getWidth() + this.options.interval;
+            x = previous.getX() + previous.getWidth() + this.options.interval;
         }
-        if(element.attrs.secondZone == "2") {
+        if(element.getSecondZone() == "2") {
             x = this.options.secondZSX - this.options.elementWidth / 2;
-        } else if(element.attrs.secondZone == "3") {
+        } else if(element.getSecondZone() == "3") {
             x = this.options.secondZSX - this.options.elementWidth / 2;
             w = this.options.thirdZSX + (this.options.elementWidth / 2) - x;
         }
-    } else if(element.attrs.firstZone == "2") {
+    } else if(element.getFirstZone() == "2") {
         x = this.options.secondZSX + this.options.interval;
-        if(element.attrs.secondZone == "2") {
+        if(element.getSecondZone() == "2") {
             x = this.options.centerX - this.options.elementWidth / 2;
-        } else if(element.attrs.secondZone == "3") {
+        } else if(element.getSecondZone() == "3") {
             x = this.options.secondZEX - this.options.elementWidth / 2;
         }
-    } else if(element.attrs.firstZone == "3") {
+    } else if(element.getFirstZone() == "3") {
         x = this.options.thirdZSX + this.options.interval;
         if(previous != undefined) {
-            if((previous.shape.getX() + previous.shape.getWidth()) > this.options.thirdZSX) {
-                x = previous.shape.getX() + previous.shape.getWidth() + this.options.interval;
+            if((previous.getX() + previous.getWidth()) > this.options.thirdZSX) {
+                x = previous.getX() + previous.getWidth() + this.options.interval;
             }
         }
     }
 
     //Set the element's props
-    element.shape.setX(x);
-    element.shape.setWidth(w);
-    element.shape.setY(y);
+    element.setX(x);
+    element.setWidth(w);
+    element.setY(y);
 
     this.elements.push(element);
-    this.layer.add(element.shape);
+    this.layer.add(element);
 };
 
 Drawing.Scheme.prototype.draw = function() {
     this._createXYLines();
 
     for(var i = 0; i < this.options.codes.length; i++) {
-        this._addElement(new Drawing.Element({code: this.options.codes[i]}));
+        this._addElement(new Drawing.Element({
+            width: this.options.elementWidth,
+            height: this.options.elementHeight,
+            code: this.options.codes[i]
+        }));
     }
 
     this.stage.add(this.layer);

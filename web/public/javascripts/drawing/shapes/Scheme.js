@@ -162,14 +162,67 @@ Drawing.Scheme.prototype._addElement = function (element) {
     this.layer.add(element);
 };
 
+/**
+ * @return one of [-1, 0, 1] numbers
+ */
+Drawing.Scheme.prototype._getSaliences = function (codes) {
+    var results = [];
+    var types = [];
+
+    for(var i = 0; i < codes.length; i++) {
+        types.push(codes[i].charAt(2));
+        types.push(codes[i].charAt(4));
+    }
+
+    var b = 0;
+
+    for(var i = 0; i < codes.length; i=i+2) {
+        if(types[i] == "P") {
+            if(i == 0) {
+                results[i] = 1;
+            } else {
+                results[i] = -1;
+            }
+            if(i % 2 == 0) {
+                b = results[i];
+            }
+        } else if(types[i] == "O") {
+            results[i] = 0;
+        } else if(types[i] == "A") {
+            if(i == 0) {
+                results[i] = 0;
+            } else {
+                if (b == 1) {
+                    results[i] = 1;
+                } else {
+                    results[i] = -1;
+                }
+            }
+        } else if(types[i] == "F") {
+            if(b == 1) {
+                results[i] = 1;
+            } else {
+                results[i] = -1;
+            }
+        } else {
+            results[i] = 0;
+        }
+    }
+    return results;
+};
+
 Drawing.Scheme.prototype.draw = function() {
     this._createXYLines();
+
+    var surfaces = this._getSaliences(this.options.codes);
 
     for(var i = 0; i < this.options.codes.length; i++) {
         this._addElement(new Drawing.Element({
             width: this.options.elementWidth,
             height: this.options.elementHeight,
-            code: this.options.codes[i]
+            code: this.options.codes[i],
+            firstR: surfaces[i],
+            secondR: surfaces[i + 1]
         }));
     }
 

@@ -8,8 +8,8 @@ Drawing.Element = function(config) {
         height: 0,
         stroke: 'black',
         strokeWidth: 1,
-        firstR: -1,
-        secondR: -1
+        firstR: 0,
+        secondR: 0
     });
 
     $.extend(this.attrs, config);
@@ -41,22 +41,28 @@ Drawing.Element = function(config) {
             context.bezierCurveTo(this.attrs.width, this.attrs.radious,
                     this.attrs.width, this.attrs.height - this.attrs.radious,
                     this.attrs.width - this.attrs.radious, this.attrs.height);
-        } else {
+        } else if(this.attrs.secondR < 0) {
             context.lineTo(this.attrs.width, 0);
             context.bezierCurveTo(this.attrs.width - this.attrs.radious, this.attrs.radious,
                     this.attrs.width - this.attrs.radious, this.attrs.height - this.attrs.radious,
                     this.attrs.width, this.attrs.height);
+        } else {
+            context.lineTo(this.attrs.width, 0);
+            context.lineTo(this.attrs.width, this.attrs.height);
         }
         if(this.attrs.firstR > 0) {
             context.lineTo(this.attrs.radious, this.attrs.height);
             context.bezierCurveTo(0, this.attrs.height - this.attrs.radious,
                     0, this.attrs.radious,
                     this.attrs.radious, 0);
-        } else {
+        } else if(this.attrs.firstR < 0) {
             context.lineTo(0, this.attrs.height);
             context.bezierCurveTo(this.attrs.radious, this.attrs.height - this.attrs.radious,
                     this.attrs.radious, this.attrs.radious,
                     0, 0);
+        } else {
+            context.lineTo(0, this.attrs.height);
+            context.lineTo(0, 0);
         }
         context.closePath();
         this.applyStyles();

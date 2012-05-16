@@ -27,8 +27,15 @@ deploy()
 undeploy()
 {
 	echo "[INFO] [deploy.sh] Undeploying the previously deployed war..."
-        ssh $USER@$HOST 'cd /opt/jboss-as/standalone/deployments; rm -f e3soos.war.*; touch e3soos.war.undeploy; sleep 2s; rm -f e3soos.war.undeploy*; cd e3soos.war/WEB-INF; rm -fr application classes framework lib resources;'
-        echo "[INFO] [deploy.sh] The previous version was undeployed."
+        ssh $USER@$HOST 'cd /opt/jboss-as/standalone/deployments; rm -f e3soos.war.*; touch e3soos.war.undeploy; sleep 5s; rm -f e3soos.war.undeploy*;'
+	echo "[INFO] [deploy.sh] The previous version was undeployed."
+}
+
+remove()
+{
+	echo "[INFO] [deploy.sh] Removing the previous version..."
+	ssh $USER@$HOST 'rm -f e3soos.war.undeploy*; cd e3soos.war/WEB-INF; rm -fr application classes framework lib resources;'
+	echo "[INFO] [deploy.sh] The previous version was removed."
 }
 
 copy()
@@ -50,10 +57,17 @@ then
 	exit $?;
 fi
 
+if [ "$1" = "--undeployonly" ]
+then
+	undeploy;
+	exit $?;
+fi
+
 if [ "$1" = "" ]
 then
 	build;
 	undeploy;
+	remove;
 	copy;
 	deploy;
 fi

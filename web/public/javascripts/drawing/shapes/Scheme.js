@@ -18,7 +18,7 @@ Drawing.Scheme = function(options) {
     this.options.centerX = this.stage.getWidth() / 2;
     this.options.centerY = this.stage.getHeight() / 2;
     this.options.endX = this.stage.getWidth() - this.options.xylinesStrokeWidth;
-    this.options.secondZoneWidth = this.options.elementWidth * 2 + this.options.interval * 2;
+    this.options.secondZoneWidth = this.options.elementWidth * 3 + this.options.interval * 3;
     this.options.secondZSX = this.options.centerX - (this.options.secondZoneWidth / 2);
     this.options.secondZEX = this.options.centerX + (this.options.secondZoneWidth / 2);
     this.options.firstZSX = this.options.interval,
@@ -140,7 +140,7 @@ Drawing.Scheme.prototype._addElement = function (element) {
     } else if(element.getFirstZone() == "2") {
         x = this.options.secondZSX + this.options.interval;
         if(element.getSecondZone() == "2") {
-            x = this.options.centerX - this.options.elementWidth / 2;
+            x = this.options.centerX + this.options.interval;
         } else if(element.getSecondZone() == "3") {
             x = this.options.secondZEX - this.options.elementWidth / 2;
         }

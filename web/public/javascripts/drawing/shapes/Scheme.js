@@ -168,23 +168,33 @@ Drawing.Scheme.prototype._addElement = function (element) {
 Drawing.Scheme.prototype._getSaliences = function (codes) {
     var results = [];
     var types = [];
+    var zones = [];
 
     for(var i = 0; i < codes.length; i++) {
         types.push(codes[i].charAt(2));
+        zones.push(parseInt(codes[i].charAt(1)));
         types.push(codes[i].charAt(4));
+        zones.push(parseInt(codes[i].charAt(3)));
     }
+
+    //console.log(types);
+    //console.log(zones);
 
     var b = 0;
 
-    for(var i = 0; i < codes.length; i=i+2) {
+    for(var i = 0; i < types.length; i++) {
         if(types[i] == "P") {
-            if(i == 0) {
+            if(i % 2 != 0 && zones[i] >= zones[i - 1] && zones[i] > 1) {
+                results[i] = 1;
+            } else if(i % 2 == 0 && zones[i] > 1 && zones[i + 1] > zones[i]){
                 results[i] = 1;
             } else {
                 results[i] = -1;
             }
-            if(i % 2 == 0) {
+            if(i % 2 == 0){
                 b = results[i];
+            } else {
+                b = -1 * results[i];
             }
         } else if(types[i] == "O") {
             results[i] = 0;
@@ -207,7 +217,9 @@ Drawing.Scheme.prototype._getSaliences = function (codes) {
         } else {
             results[i] = 0;
         }
+        //console.log(zones[i] + types[i] + ". a=" + results[i] + "; b=" + b);
     }
+    //console.log(results);
     return results;
 };
 
@@ -221,8 +233,8 @@ Drawing.Scheme.prototype.draw = function() {
             width: this.options.elementWidth,
             height: this.options.elementHeight,
             code: this.options.codes[i],
-            firstR: surfaces[i],
-            secondR: surfaces[i + 1]
+            firstR: surfaces[i * 2],
+            secondR: surfaces[i * 2 + 1]
         }));
     }
 

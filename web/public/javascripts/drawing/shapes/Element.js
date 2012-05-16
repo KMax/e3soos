@@ -36,12 +36,12 @@ Drawing.Element = function(config) {
         } else {
             context.moveTo(0,0);
         }
-        if(this.attrs.secondR > 0) {
+        if(this.attrs.secondR < 0) {
             context.lineTo(this.attrs.width - this.attrs.radious, 0);
             context.bezierCurveTo(this.attrs.width, this.attrs.radious,
                     this.attrs.width, this.attrs.height - this.attrs.radious,
                     this.attrs.width - this.attrs.radious, this.attrs.height);
-        } else if(this.attrs.secondR < 0) {
+        } else if(this.attrs.secondR > 0) {
             context.lineTo(this.attrs.width, 0);
             context.bezierCurveTo(this.attrs.width - this.attrs.radious, this.attrs.radious,
                     this.attrs.width - this.attrs.radious, this.attrs.height - this.attrs.radious,

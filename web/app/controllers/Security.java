@@ -20,4 +20,8 @@ public class Security extends Secure.Security {
         redirect("Index.index");
     }
 
+    public static String connected() {
+        return Secure.Security.connected();
+    }
+
 }

@@ -1,0 +1,26 @@
+#{extends 'templates/nav.html' /}
+
+#{set 'navStyles'}
+#{stylesheet 'crud.css'/}
+#{/set}
+
+<div id="crud" class="row-fluid">
+    #{if request.actionMethod != 'index'}
+        #{crud.navigation /}
+    #{/if}
+
+    #{if flash.success}
+        <div class="crudFlash flashSuccess">
+            ${flash.success}
+        </div>
+    #{/if}
+    #{if flash.error || error}
+        <div class="crudFlash flashError">
+            ${error ?: flash.error}
+        </div>
+    #{/if}
+
+    <div id="crudContent">
+    #{doLayout /}
+    </div>
+</div>

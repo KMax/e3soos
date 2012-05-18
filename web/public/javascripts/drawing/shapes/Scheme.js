@@ -184,9 +184,9 @@ Drawing.Scheme.prototype._getSaliences = function (codes) {
 
     for(var i = 0; i < types.length; i++) {
         if(types[i] == "P") {
-            if(i % 2 != 0 && zones[i] >= zones[i - 1] && zones[i] > 1) {
+            if(i % 2 != 0 && zones[i - 1] == 1 && zones[i] < 3) {
                 results[i] = 1;
-            } else if(i % 2 == 0 && zones[i] > 1 && zones[i + 1] > zones[i]){
+            } else if(i % 2 == 0 && zones[i] < 2){
                 results[i] = 1;
             } else {
                 results[i] = -1;

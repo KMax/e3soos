@@ -15,42 +15,37 @@
     </div>
     <div class="span3">
     #{form @Secure.authenticate(), class: 'well'}
-
         #{if flash.error}
-        <p class="error">
-            &{flash.error}
-        </p>
+        <p class="error">&{flash.error}</p>
         #{/if}
         #{if flash.success}
-        <p class="success">
-            &{flash.success}
-        </p>
+        <p class="success">&{flash.success}</p>
         #{/if}
         <fieldset>
-        <div class="control-group">
-            <label class="control-label" for="username">&{'secure.username'}</label>
-            <div class="controls">
-            <input class="span3" type="text" name="username" id="username" value="${flash.username}" />
+            <div class="control-group">
+                <label class="control-label" for="username">&{'secure.username'}</label>
+                <div class="controls">
+                <input style="width: 96%" type="text" name="username" id="username" value="${flash.username}" />
+                </div>
             </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="password">&{'secure.password'}</label>
-            <div class="controls">
-            <input class="span3" type="password" name="password" id="password" value="" />
+            <div class="control-group">
+                <label class="control-label" for="password">&{'secure.password'}</label>
+                <div class="controls">
+                <input style="width: 96%" type="password" name="password" id="password" value="" />
+                </div>
             </div>
-        </div>
-        <div class="control-group">
-            <div class="controls">
-            <input class="btn btn-primary" type="submit" id="signin" value="&{'secure.signin'}" />
-            <span class="help-inline">*only for alpha-testers</span>
+            <div class="control-group">
+                <div class="controls">
+                <input class="btn btn-primary" type="submit" id="signin" value="&{'secure.signin'}" />
+                <span class="help-inline">*only for alpha-testers</span>
+                </div>
             </div>
-        </div>
         </fieldset>
     #{/form}
     </div>
   </div> <!-- row -->
   <footer class="footer">
     <hr>
-    <p>blah-blah</p>
+    <p><a href="#">About us</a><span class="divider"> | </span><a href="#">Contact</a></p>
   </footer>
 </div> <!-- container -->

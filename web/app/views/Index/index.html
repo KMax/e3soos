@@ -4,17 +4,17 @@
   #{stylesheet 'index.css' /}
 #{/set}
 
-<div class="container-fluid">
-  <div class="row-fluid">
-    <div class="span3 offset3 brand-name">Project X</div>
+<div class="container">
+  <div class="row">
+    <div class="span3 brand-name">Project X</div>
   </div>
-  <div class="row-fluid">
+  <div class="row">
     <div class="span7 hero-unit">
       <h1>Heading</h1>
       <p>Tagline</p>
     </div>
     <div class="span3">
-    #{form @Secure.authenticate(), class: 'well'}
+    #{form @Secure.authenticate(), class: 'well form-vertical'}
         #{if flash.error}
         <p class="error">&{flash.error}</p>
         #{/if}
@@ -25,13 +25,13 @@
             <div class="control-group">
                 <label class="control-label" for="username">&{'secure.username'}</label>
                 <div class="controls">
-                <input style="width: 96%" type="text" name="username" id="username" value="${flash.username}" />
+                    <input class="input-large" type="text" name="username" id="username" value="${flash.username}" />
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label" for="password">&{'secure.password'}</label>
                 <div class="controls">
-                <input style="width: 96%" type="password" name="password" id="password" value="" />
+                <input class="input-large" type="password" name="password" id="password" value="" />
                 </div>
             </div>
             <div class="control-group">

@@ -1,14 +1,17 @@
+package jobs;
+
 import models.User;
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
 import play.test.Fixtures;
+import utils.RuleRunner;
 
 /**
  *
  * @author Maxim Kolchin
  */
 @OnApplicationStart
-public class Bootstrap extends Job {
+public class OnStartApplication extends Job {
 
     @Override
     public void doJob() {
@@ -16,5 +19,8 @@ public class Bootstrap extends Job {
         if(User.count() == 0) {
             Fixtures.loadModels("initial-data.yml");
         }
+
+        //Initialize RuleRunner
+        RuleRunner.init();
     }
 }

@@ -43,8 +43,6 @@ public class Application extends Controller {
 
     @NoTransaction
     public static void runSynthesis(Requirements requirements) throws InterruptedException {
-        Thread.sleep(3000);
-        error();
         if(requirements != null) {
             List<String> schemes = new ArrayList<String>();
             Classification classification = RuleRunner.classify(requirements);

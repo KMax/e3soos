@@ -110,6 +110,11 @@ e3soos.dashboard = (function () {
                 event.preventDefault();
             });
             $('#debug').button();
+            
+            //Setup ajax request configuration
+            $.ajaxSetup({
+                timeout: 60000
+            });
         }
     };
 })();
@@ -152,7 +157,7 @@ e3soos.notifier = (function () {
             $('#' + modal_id).empty();
             $('#' + modal_id).append('<div class="alert alert-error" style="margin-bottom:0;">'
                 + '<h4 class="alert-heading">Oops, error!</h4>'
-                + 'Please, reload the page or contact us if it didn\'t help.'
+                + 'Please, reload the page or contact us if it doesn\'t help.'
                 + '</div>');
         }
     };

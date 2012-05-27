@@ -1,98 +1,71 @@
+"use strict";
+
+//Declare the namespace
+var e3soos = e3soos || {};
+
 /**
  * Initializes the code
  */
-$(document).ready(function(){
-    $('#btn-synthesis').click(function (event) {
-        if(validator.validate($('#tech-reqs-form'))){
-            dashboard.synthesis();
-        }
-        event.preventDefault();
-    });
-    $('#debug').click(function (event) {
-        event.preventDefault();
-    });
-    $('#debug').button();
+$(document).ready(function () {
+    e3soos.dashboard.initialize();
 });
 
-/**
- * Utility module.
- */
-var utils = (function () {
-    return {
-        toParam : function (object, keyPrefix) {
-            var tmp = {};
-            $.each(object, function (key, value) {
-                tmp[keyPrefix + key] = value;
+e3soos.dashboard = (function () {
+
+    var classification = {},
+        technicalReqs = {},
+        schemes = [],
+
+        /**
+        * Reads technical requirements from the DOM tree and saves them.
+        */
+        readTechnicalReqs = function () {
+            technicalReqs.apertureSpeed = $('#aperture-speed').val();
+            technicalReqs.angularField = $('#angular-field').val();
+            technicalReqs.focalLength = $('#focal-length').val();
+            technicalReqs.imageQuality = $('#image-quality').val();
+            technicalReqs.backFocalDistance = $('#backfocal-distance').val();
+            technicalReqs.entrancePupilPosition = $('#entrance-pupil-position').val();
+            technicalReqs['waveLengths[0]'] = $('#spectral-range-min').val();
+            technicalReqs['waveLengths[1]'] = $('#spectral-range-max').val();
+        },
+
+        /**
+        * Gets if the debug mode is enabled or not.
+        * @return true or false
+        */
+        isDebugMode = function () {
+            var debug = $('#debug');
+            return debug.size() !== 0 && debug.is('.active');
+        },
+
+        /**
+        * Writes the classification object in DOM tree.
+        */
+        writeClassification = function () {
+            $('#class-J').text(classification.j);
+            $('#class-W').text(classification.w);
+            $('#class-F').text(classification.f);
+            $('#class-L').text(classification.l);
+            $('#class-Q').text(classification.q);
+            $('#class-S').text(classification.s);
+            $('#class-D').text(classification.d);
+            $('#class-R').text(classification.r);
+        },
+
+        afterSynthesisFinished = function (data) {
+            schemes = data.schemes;
+            classification = data.classification;
+            writeClassification();
+            lib.schemes.show({
+                schemes: schemes
             });
-            return $.param(tmp);
-        }
-    };
-})();
+            $('#scheme-area').height($(window).height() - $('#general-chs').height() - 130);
+        },
 
-var dashboard = (function () {
-
-    var classification = {};
-    var technicalReqs = {};
-    var schemes = [];
-
-    /**
-    * Reads technical requirements from the DOM tree and saves them.
-    */
-    var readTechnicalReqs = function () {
-        technicalReqs.apertureSpeed = $('#aperture-speed').val();
-        technicalReqs.angularField = $('#angular-field').val();
-        technicalReqs.focalLength = $('#focal-length').val();
-        technicalReqs.imageQuality = $('#image-quality').val();
-        technicalReqs.backFocalDistance = $('#backfocal-distance').val();
-        technicalReqs.entrancePupilPosition = $('#entrance-pupil-position').val();
-        technicalReqs['waveLengths[0]'] = $('#spectral-range-min').val();
-        technicalReqs['waveLengths[1]'] = $('#spectral-range-max').val();
-    };
-
-    /**
-    * Gets if debug mode is enabled or not.
-    * @return true or false
-    */
-    var isDebugMode = function() {
-        var debug = $('#debug');
-        return debug.size() != 0 && debug.is('.active');
-    };
-
-    /**
-   * Writes the classification object in DOM tree.
-   */
-    var writeClassification = function() {
-        $('#class-J').text(classification.j);
-        $('#class-W').text(classification.w);
-        $('#class-F').text(classification.f);
-        $('#class-L').text(classification.l);
-        $('#class-Q').text(classification.q);
-        $('#class-S').text(classification.s);
-        $('#class-D').text(classification.d);
-        $('#class-R').text(classification.r);
-    };
-
-    var afterSynthesisFinished = function(data) {
-        schemes = data.schemes;
-        classification = data.classification;
-        writeClassification();
-        lib.schemes.show({
-            schemes: schemes
-        });
-        $('#scheme-area').height($(window).height() - $('#general-chs').height() - 130);
-    }
-
-    var beforeSendRequest = function() {
-        progressbar.show();
-    };
-
-    var afterRequestCompleted = function() {
-        setTimeout(
-            function(){
-                progressbar.hide();
-            },
-            600);
-    };
+        onError = function () {
+            e3soos.notifier.showError();
+        };
 
     /**
     * Public methods and variables.
@@ -100,27 +73,43 @@ var dashboard = (function () {
     return {
         synthesis: function () {
             readTechnicalReqs();
-            if(!jQuery.isEmptyObject(technicalReqs)) {
-                beforeSendRequest();
-                if(isDebugMode()) {
+            if (!jQuery.isEmptyObject(technicalReqs)) {
+                e3soos.notifier.open();
+                if (isDebugMode()) {
                     $.getJSON(
-                        '/debug/synthesis?' + utils.toParam(technicalReqs, 'requirements.'),
-                        function(data) {
-                            debugwindow.open(data.logs);
+                        '/debug/synthesis?' + e3soos.utils.toParam(technicalReqs, 'requirements.'),
+                        function (data) {
+                            e3soos.debugwindow.open(data.logs);
                             afterSynthesisFinished(data.data);
-                            afterRequestCompleted();
+                            e3soos.notifier.close();
                         }
-                    );
+                    ).error(function () { onError(); });
                 } else {
                     $.getJSON(
-                        '/run/synthesis?' + utils.toParam(technicalReqs, 'requirements.'),
-                        function(data) {
+                        '/run/synthesis?' + e3soos.utils.toParam(technicalReqs, 'requirements.'),
+                        function (data) {
                             afterSynthesisFinished(data);
-                            afterRequestCompleted();
+                            e3soos.notifier.close();
                         }
-                    );
+                    ).error(function () { onError(); });
                 }
             }
+        },
+
+        /**
+         * Initilize the module.
+         */
+        initialize: function () {
+            $('#btn-synthesis').click(function (event) {
+                if (e3soos.validator.validate($('#tech-reqs-form'))) {
+                    e3soos.dashboard.synthesis();
+                }
+                event.preventDefault();
+            });
+            $('#debug').click(function (event) {
+                event.preventDefault();
+            });
+            $('#debug').button();
         }
     };
 })();
@@ -128,93 +117,104 @@ var dashboard = (function () {
 /**
  * Progress bar.
  */
-var progressbar = (function() {
+e3soos.notifier = (function () {
+
+    var modal_id = "notifier-modal",
+
+        /**
+        * Creates the DOM representation of the progress bar.
+        */
+        createDOM = function () {
+            $('body').append('<div id="' + modal_id + '" class="modal fade">'
+                + '<div class="modal-header"><h3>Please, waiting...</h3></div>'
+                + '</div>');
+        };
 
     /**
-   * Creates the DOM representation of the progress bar.
-   */
-    var createDOM = function() {
-        $('body').append('<div id="progressbar" class="modal fade">'
-            + '<div class="modal-header"><h3>Please, waiting...</h3></div>'
-            +'</div>');
-    }
-
-    /**
-   * Public methods and variables.
-   */
+    * Public methods and variables.
+    */
     return {
-        show: function() {
-            if($('#progressbar').length <= 0) {
+        open: function () {
+            if ($('#' + modal_id).length <= 0) {
                 createDOM();
             }
-            $('#progressbar').modal({
+            $('#' + modal_id).modal({
                 backdrop: 'static',
-                keyboard: false,
-                show: false
+                keyboard: false
             });
-            $('#progressbar').modal('show');
         },
-        hide: function() {
-            $('#progressbar').modal('hide');
+
+        close: function () {
+            setTimeout(function () { $('#' + modal_id).modal('hide'); }, 600);
+        },
+
+        showError: function () {
+            $('#' + modal_id).empty();
+            $('#' + modal_id).append('<div class="alert alert-error" style="margin-bottom:0;">'
+                + '<h4 class="alert-heading">Oops, error!</h4>'
+                + 'Please, reload the page or contact us if it didn\'t help.'
+                + '</div>');
         }
     };
 })();
 
-var debugwindow = (function(){
+e3soos.debugwindow = (function () {
 
-    var window = $('<div></div>').
-    dialog({
-        autoOpen: false,
-        title: 'Debug window',
-        width: 'auto'
-    });
+    var window = $('<div></div>').dialog({
+            autoOpen: false,
+            title: 'Debug window',
+            width: 'auto'
+        });
 
     return {
-        open: function(logs) {
+        open: function (logs) {
             window.empty();
             var html = '<table class="table table-striped">'
-            + '<thead><tr><th>Package</th><th>Rule</th><th>Facts fired a rule</th></tr></thead>';
-            $.each(logs, function(index, value){
-                html += '<tr><td>' +value.packageName +'</td><td>' + value.ruleName
-                + '</td><td>' + value.facts + '</td></tr>';
+                + '<thead><tr><th>Package</th><th>Rule</th><th>Facts fired a rule</th></tr></thead>';
+            $.each(logs, function (index, value) {
+                html += '<tr><td>' + value.packageName + '</td><td>' + value.ruleName
+                    + '</td><td>' + value.facts + '</td></tr>';
             });
             html += '</table>';
             window.html(html);
             window.dialog('open');
         },
-        close: function() {
+        close: function () {
             window.dialog('close');
         }
     };
 })();
 
-var validator = (function () {
+e3soos.validator = (function () {
 
     var isEmptyString = function (value) {
         var tmp = $.trim(value);
-        if(tmp == "" || tmp == undefined || tmp == null) {
+        if (tmp === "" || tmp === undefined || tmp === null) {
             return true;
         } else {
             return false;
         }
-    };
+    },
 
-    var isValid = function(element) {
-        if(element.attr('requred') == "true" && isEmptyString(element.val())) {
+        isValid = function (element) {
+            if (element.attr('requred') === "true" && isEmptyString(element.val())) {
                 return false;
-        }
-        if(element.attr('type') == "number" && !$.isNumeric(element.val())) {
-            return false;
-        }
-        return true;
-    };
+            }
+            if (element.attr('type') === "number" && !$.isNumeric(element.val())) {
+                return false;
+            }
+            return true;
+        };
 
     return {
-        validate: function(form) {
+        /**
+         * Validate a form.
+         */
+        validate: function (form) {
             var flag = true;
             form.find('*:input').each(function () {
                 var control_group = $(this).parents('.control-group');
-                if(!isValid($(this))) {
+                if (!isValid($(this))) {
                     $(control_group).addClass('error');
                     flag = false;
                 } else {
@@ -223,5 +223,5 @@ var validator = (function () {
             });
             return flag;
         }
-    }
+    };
 })();

@@ -11,6 +11,7 @@
 #{script 'drawing/shapes/Element.js'/}
 #{script 'drawing/shapes/Scheme.js'/}
 #{script 'schemes.js'/}
+#{script 'utils.js' /}
 #{script 'synthesis.js'/}
 #{script 'popovers.js'/}
 #{/set}
@@ -24,7 +25,7 @@
                         <i id="aperture-speed-help" class="icon-question-sign"></i>
                     </label>
                     <div class="controls">
-                        <input class="input-small" id="aperture-speed" type="number" required="true"/>
+                        <input class="input-small" id="aperture-speed" type="number" step="0.1" required="true"/>
                     </div>
                 </div>
                 <div class="control-group">
@@ -33,7 +34,7 @@
                     </label>
                     <div class="controls">
                         <div class="input-append">
-                            <input class="input-small" id="angular-field" type="number" required="true"/><span class="add-on">&#176;</span>
+                            <input class="input-small" id="angular-field" type="number" step="1" required="true"/><span class="add-on">&#176;</span>
                         </div>
                     </div>
                 </div>
@@ -43,7 +44,7 @@
                     </label>
                     <div class="controls">
                         <div class="input-append">
-                            <input class="input-small" id="focal-length" type="number" required="true"/><span class="add-on">mm.</span>
+                            <input class="input-small" id="focal-length" type="number" step="0.1" required="true"/><span class="add-on">mm.</span>
                         </div>
                     </div>
                 </div>
@@ -53,7 +54,7 @@
                     </label>
                     <div class="controls">
                         <div class="input-append">
-                            <input class="input-small" id="backfocal-distance" type="number" required="true"/><span class="add-on">mm.</span>
+                            <input class="input-small" id="backfocal-distance" type="number" step="0.1" required="true"/><span class="add-on">mm.</span>
                         </div>
                     </div>
                 </div>
@@ -92,9 +93,9 @@
                     <div class="controls">
                         <div class="input-append">
                             <input class="input-micro" id="spectral-range-min" type="number"
-                                   placeholder="min." required="true"/><input
+                                   placeholder="min." step="1" required="true"/><input
                                    class="input-micro" id="spectral-range-max" type="number"
-                                   placeholder="max." required="true"/><span class="add-on">nm.</span>
+                                   placeholder="max." step="1" required="true"/><span class="add-on">nm.</span>
                         </div>
                     </div>
                 </div>

@@ -7,7 +7,9 @@
 *       /admin                                  module:crud
 
 # Home page
-*       /                                       Index.index
+GET     /                                       Index.index
+GET     /about                                  Index.about
+GET     /contact                                Index.contact
 GET     /dashboard                              Application.dashboard
 GET     /synthesis                              Application.synthesis
 GET     /run/synthesis                          Application.runSynthesis

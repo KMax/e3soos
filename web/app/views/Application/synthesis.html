@@ -25,7 +25,7 @@
                         <i id="aperture-speed-help" class="icon-question-sign"></i>
                     </label>
                     <div class="controls">
-                        <input class="input-small" id="aperture-speed" type="number" step="0.1" required="true"/>
+                        <input class="input-small" id="aperture-speed" type="number" step="0.1" required="true" min="0"/>
                     </div>
                 </div>
                 <div class="control-group">
@@ -34,7 +34,7 @@
                     </label>
                     <div class="controls">
                         <div class="input-append">
-                            <input class="input-small" id="angular-field" type="number" step="1" required="true"/><span class="add-on">&#176;</span>
+                            <input class="input-small" id="angular-field" type="number" step="1" required="true" min="0" max="180"/><span class="add-on">&#176;</span>
                         </div>
                     </div>
                 </div>
@@ -93,9 +93,9 @@
                     <div class="controls">
                         <div class="input-append">
                             <input class="input-micro" id="spectral-range-min" type="number"
-                                   placeholder="min." step="1" required="true"/><input
+                                   placeholder="min." step="1" required="true" min="0"/><input
                                    class="input-micro" id="spectral-range-max" type="number"
-                                   placeholder="max." step="1" required="true"/><span class="add-on">nm.</span>
+                                   placeholder="max." step="1" required="true" min="0"/><span class="add-on">nm.</span>
                         </div>
                     </div>
                 </div>

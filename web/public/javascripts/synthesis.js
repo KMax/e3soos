@@ -110,7 +110,7 @@ e3soos.dashboard = (function () {
                 event.preventDefault();
             });
             $('#debug').button();
-            
+
             //Setup ajax request configuration
             $.ajaxSetup({
                 timeout: 60000
@@ -206,6 +206,12 @@ e3soos.validator = (function () {
                 return false;
             }
             if (element.attr('type') === "number" && !$.isNumeric(element.val())) {
+                return false;
+            }
+            if (element.attr('min') && element.val() < parseFloat(element.attr('min'))) {
+                return false;
+            }
+            if (element.attr('max') && element.val() > parseFloat(element.attr('max'))) {
                 return false;
             }
             return true;

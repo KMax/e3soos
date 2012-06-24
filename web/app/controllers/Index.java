@@ -4,7 +4,6 @@ import play.mvc.Controller;
 
 /**
  *
- * @author Maxim Kolchin
  */
 public class Index extends Controller {
 
@@ -14,6 +13,14 @@ public class Index extends Controller {
         } else {
             render();
         }
+    }
+
+    public static void about() {
+        render();
+    }
+
+    public static void contact() {
+        render();
     }
 
 }

@@ -83,4 +83,8 @@ public class Application extends Controller {
         ok();
         badRequest();
     }
+
+    public static void tests() {
+        render();
+    }
 }

@@ -2,7 +2,6 @@ package ru.ifmo.ailab.e3soos.facts;
 
 /**
  *
- * @author Maxim Kolchin
  */
 public class Schema {
 
@@ -20,10 +19,6 @@ public class Schema {
      * A fast element.
      */
     private Element tElement;
-
-    public Schema() {
-
-    }
 
     public Schema(final Element b) {
         if(b.getElementType() != ElementType.B) {

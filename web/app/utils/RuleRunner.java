@@ -3,9 +3,12 @@ package utils;
 import java.util.ArrayList;
 import java.util.List;
 import logs.AgendaLogger;
+import org.drools.KnowledgeBaseFactory;
 import org.drools.agent.KnowledgeAgent;
 import org.drools.agent.KnowledgeAgentConfiguration;
 import org.drools.agent.KnowledgeAgentFactory;
+import org.drools.builder.KnowledgeBuilderConfiguration;
+import org.drools.builder.KnowledgeBuilderFactory;
 import org.drools.command.CommandFactory;
 import org.drools.io.ResourceChangeScannerConfiguration;
 import org.drools.io.ResourceFactory;
@@ -22,6 +25,7 @@ public abstract class RuleRunner {
     private static KnowledgeAgent kAgentClassification;
     private static KnowledgeAgent kAgentSynthesis;
     private static KnowledgeAgentConfiguration kAgentConf;
+    private static KnowledgeBuilderConfiguration kBuilderConf;
     private static ResourceChangeScannerConfiguration rScannerConf;
 
     /**
@@ -31,6 +35,9 @@ public abstract class RuleRunner {
         //Create a knowledge agent configuration
         kAgentConf = KnowledgeAgentFactory.newKnowledgeAgentConfiguration();
         kAgentConf.setProperty("drools.agent.scanDirectories", "false");
+
+        kBuilderConf = KnowledgeBuilderFactory.newKnowledgeBuilderConfiguration();
+        kBuilderConf.setProperty("drools.dialect.mvel.strict", "false");
 
         //Create the resource change scanner configuration
         rScannerConf = ResourceFactory.getResourceChangeScannerService().newResourceChangeScannerConfiguration();
@@ -42,7 +49,8 @@ public abstract class RuleRunner {
                 ResourceFactory.newClassPathResource("e3soos.classification.xml", RuleRunner.class));
 
         //Create a synthesis knowledge agent
-        kAgentSynthesis = KnowledgeAgentFactory.newKnowledgeAgent("synthesis", kAgentConf);
+        kAgentSynthesis = KnowledgeAgentFactory.newKnowledgeAgent("synthesis",
+                KnowledgeBaseFactory.newKnowledgeBase(), kAgentConf, kBuilderConf);
         kAgentSynthesis.applyChangeSet(
                 ResourceFactory.newClassPathResource("e3soos.basic.xml", RuleRunner.class));
         kAgentSynthesis.applyChangeSet(
@@ -51,6 +59,8 @@ public abstract class RuleRunner {
                 ResourceFactory.newClassPathResource("e3soos.generation.xml", RuleRunner.class));
         kAgentSynthesis.applyChangeSet(
                 ResourceFactory.newClassPathResource("e3soos.wideangular.xml", RuleRunner.class));
+        kAgentSynthesis.applyChangeSet(
+                ResourceFactory.newClassPathResource("e3soos.corrective.xml", RuleRunner.class));
 
         //Set the resource change scanner configuration
         ResourceFactory.getResourceChangeScannerService().configure(rScannerConf);

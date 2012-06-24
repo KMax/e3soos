@@ -5,7 +5,6 @@ import java.util.regex.Pattern;
 
 /**
  *
- * @author Maxim Kolchin
  */
 public abstract class ElementFactory {
 

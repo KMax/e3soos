@@ -2,7 +2,6 @@ package ru.ifmo.ailab.e3soos.facts;
 
 /**
  *
- * @author Maxim Kolchin
  */
 public enum SurfaceType {
 

@@ -5,7 +5,6 @@ import org.junit.Test;
 
 /**
  *
- * @author Maxim Kolchin
  */
 public class ElementFactoryTest {
 

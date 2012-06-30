@@ -1,51 +1,36 @@
-#{extends 'templates/main.html' /}
+#{extends 'templates/public.html' /}
 
-#{set 'mainStyles'}
-  #{stylesheet 'index.css' /}
-#{/set}
-
-<div class="container">
-  <div class="row">
-    <div class="span3 brand-name">OSYST</div>
-  </div>
-  <div class="row">
-    <div class="span7 hero-unit">
-      <h1>Heading</h1>
-      <p>Tagline</p>
-    </div>
-    <div class="span3">
+<div class="span7 hero-unit">
+    <h1>OSYST</h1>
+    <p>Intellectual selection of the starting point of an optical system.</p>
+</div>
+<div class="span3">
     #{form @Secure.authenticate(), class: 'well form-vertical'}
-        #{if flash.error}
-        <p class="error">&{flash.error}</p>
-        #{/if}
-        #{if flash.success}
-        <p class="success">&{flash.success}</p>
-        #{/if}
-        <fieldset>
-            <div class="control-group">
-                <label class="control-label" for="username">&{'secure.username'}</label>
-                <div class="controls">
-                    <input type="text" name="username" id="username" value="${flash.username}" />
-                </div>
+    #{if flash.error}
+    <p class="error">&{flash.error}</p>
+    #{/if}
+    #{if flash.success}
+    <p class="success">&{flash.success}</p>
+    #{/if}
+    <fieldset>
+        <div class="control-group">
+            <label class="control-label" for="username">&{'secure.username'}</label>
+            <div class="controls">
+                <input type="text" name="username" id="username" value="${flash.username}" />
             </div>
-            <div class="control-group">
-                <label class="control-label" for="password">&{'secure.password'}</label>
-                <div class="controls">
-                    <input type="password" name="password" id="password" value="" />
-                </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="password">&{'secure.password'}</label>
+            <div class="controls">
+                <input type="password" name="password" id="password" value="" />
             </div>
-            <div class="control-group">
-                <div class="controls">
+        </div>
+        <div class="control-group">
+            <div class="controls">
                 <input class="btn btn-primary" type="submit" id="signin" value="&{'secure.signin'}" />
                 <span class="help-inline">*only for alpha-testers</span>
-                </div>
             </div>
-        </fieldset>
+        </div>
+    </fieldset>
     #{/form}
-    </div>
-  </div> <!-- row -->
-  <footer class="footer">
-    <hr>
-    <p><a href="/about">About us</a><span class="divider"> | </span><a href="/contact">Contact</a></p>
-  </footer>
-</div> <!-- container -->
+</div>

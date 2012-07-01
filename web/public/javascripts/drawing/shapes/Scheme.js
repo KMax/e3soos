@@ -227,8 +227,8 @@ Drawing.Scheme.prototype._getSaliences = function () {
             } else {
                 results[i] = -1;
             }
-        } else if(this.types[i] == "V" && this.zones[i] == 2){
-            results[i] = -1; //FIXME
+        } else if(this.types[i] == "V" && this.zones[i] == 2 && i == 0){
+            results[i] = -1;
         } else {
             results[i] = 0;
         }

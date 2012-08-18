@@ -19,7 +19,7 @@
     <div class="span4">
         <form id="tech-reqs-form" class="form-horizontal">
             <fieldset>
-                <legend>Technical characteristics</legend>
+                <!--<legend>Technical characteristics</legend>-->
                 <div class="control-group">
                     <label class="control-label with-help" for="aperture-speed">aperture speed
                         <i id="aperture-speed-help" class="icon-question-sign"></i>
@@ -100,13 +100,22 @@
                     </div>
                 </div>
                 <div>
-                    <legend>Actions</legend>
+                    <!--<legend>Actions</legend>-->
                     <div class="center-text">
                         <button id="btn-synthesis" class="btn btn-primary">Synthesize</button>
                         #{if user.hasRole("admin")}
                         <button id="debug" class="btn btn-mini" data-toggle="button">Debug</button>
                         #{/if}
                     </div>
+                </div>
+                <div>
+                    <legend>The knowledge base</legend>
+                    <ul class="list-plain">
+                        #{list items:dates.entrySet(), as:'entry' }
+                            <li><span class="package-name">${entry.key}</span>
+                                (modified: ${entry.value.format('dd.MM.yy HH:mm:ss:Z')})</li>
+                        #{/list}
+                    </ul>
                 </div>
             </fieldset>
         </form>

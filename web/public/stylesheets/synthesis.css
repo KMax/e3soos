@@ -10,3 +10,11 @@
 span[id^="class-"] {
   font-size: larger;
 }
+
+.list-plain {
+    list-style: none;
+}
+
+.package-name {
+    font-size: medium
+}

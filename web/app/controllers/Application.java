@@ -3,7 +3,9 @@ package controllers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import models.ClassificationSerializer;
 import models.SavedScheme;
 import models.User;
@@ -38,7 +40,8 @@ public class Application extends Controller {
     @Transactional(readOnly=true)
     public static void synthesis() {
         User user = User.find("byEmail", Security.connected()).first();
-        render(user);
+        Map<String, Date> dates = RuleRunner.getDates();
+        render(user, dates);
     }
 
     @NoTransaction

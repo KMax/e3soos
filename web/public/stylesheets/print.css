@@ -1,0 +1,54 @@
+body {
+    width: 169mm;
+    border: black solid 1px;
+    font-size: 80%;
+}
+
+.block {
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+}
+
+.block header {
+    text-align: center;
+    font-weight: bold;
+}
+
+.list-plain {
+    list-style: none;
+    padding: 0;
+}
+
+.param {
+    margin: 0 5mm 0 5mm;
+}
+
+.param .param-value {
+    float: right;
+}
+
+.package-name {
+    font-family: monospace;
+    font-size: 1em;
+}
+
+.package-info {
+    font-family: serif;
+    font-size: 0.8em;
+}
+
+.class-name {
+    display: inline-block;
+}
+
+.class-label {
+    background-color: gray;
+    padding: 0.5mm;
+    color: white;
+    margin: 0.5mm;
+}
+
+#scheme-area {
+    width:100%;
+}

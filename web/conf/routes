@@ -17,6 +17,7 @@ GET     /debug/synthesis                        Application.runSynthesisWithLogs
 POST    /schemes                                Application.saveScheme
 DELETE  /scheme/{<[0-9]+>id}                    Application.deleteScheme
 GET     /tests                                  Application.tests
+GET     /synthesis/print                        Application.printSynthesis
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

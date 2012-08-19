@@ -30,14 +30,14 @@ public class Application extends Controller {
         gson = builder.create();
     }
 
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public static void dashboard() {
         User user = User.find("byEmail", Security.connected()).first();
         List<SavedScheme> schemes = SavedScheme.find("byUser", user).fetch();
         render(user, schemes);
     }
 
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public static void synthesis() {
         User user = User.find("byEmail", Security.connected()).first();
         Map<String, Date> dates = RuleRunner.getDates();
@@ -45,11 +45,24 @@ public class Application extends Controller {
     }
 
     @NoTransaction
-    public static void runSynthesis(Requirements requirements) throws InterruptedException {
-        if(requirements != null) {
+    public static void printSynthesis(Requirements requirements) {
+        if (requirements != null) {
             List<String> schemes = new ArrayList<String>();
             Classification classification = RuleRunner.classify(requirements);
-            for(Schema scheme : RuleRunner.synthesis(classification)) {
+            for (Schema scheme : RuleRunner.synthesis(classification)) {
+                schemes.add(scheme.toString());
+            }
+            renderArgs.put("dates", RuleRunner.getDates());
+            render(classification, schemes, requirements);
+        }
+    }
+
+    @NoTransaction
+    public static void runSynthesis(Requirements requirements) throws InterruptedException {
+        if (requirements != null) {
+            List<String> schemes = new ArrayList<String>();
+            Classification classification = RuleRunner.classify(requirements);
+            for (Schema scheme : RuleRunner.synthesis(classification)) {
                 schemes.add(scheme.toString());
             }
             renderJSON("{\"classification\": " + gson.toJson(classification) + ", "
@@ -60,7 +73,7 @@ public class Application extends Controller {
 
     @NoTransaction
     public static void runSynthesisWithLogs(Requirements requirements) {
-        if(requirements != null) {
+        if (requirements != null) {
             Classification classification = RuleRunner.classify(requirements);
 
             Result result = RuleRunner.synthesisWithLogs(classification);
@@ -71,7 +84,7 @@ public class Application extends Controller {
     }
 
     public static void saveScheme(String code, String comment) throws InterruptedException {
-        if(code != null && !code.isEmpty()) {
+        if (code != null && !code.isEmpty()) {
             User user = User.find("byEmail", Security.connected()).first();
             SavedScheme scheme = new SavedScheme(user, code, comment);
             scheme.save();

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        #{stylesheet 'print.css'/}
+        #{stylesheet 'schemes.css'/}
+        #{script 'jquery/jquery-1.7.2.min.js'/}
+        #{script 'drawing/kinetic-v3.9.5.min.js'/}
+        #{script 'drawing/shapes/Element.js'/}
+        #{script 'drawing/shapes/Scheme.js'/}
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('.scheme').each(function(index, value) {
+                    new Drawing.Scheme({
+                        container: 'scheme_' + (index + 1),
+                        codes: $(value).find('.scheme-code').text().split(' + '),
+                        interval: 10
+                    })
+                    .draw();
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div>
+            <div class="block">
+                <header>The report information</header>
+                <ul class="list-plain">
+                    <li class="param">
+                        <span class="param-name">Date</span>:
+                        <span class="param-value">${new Date().format('dd.MM.yy HH:mm:ss:Z')}</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="block">
+                <header>The versions of the knowledge base's packages</header>
+                <ul class="list-plain">
+                    #{list items:dates?.entrySet(), as:'entry' }
+                    <li>
+                        <span class="package-name">${entry.key}</span>
+                        <span class="package-info">
+                            (modified: ${entry.value.format('dd.MM.yy HH:mm:ss:Z')})
+                        </span>
+                    </li>
+                    #{/list}
+                </ul>
+            </div>
+        </div>
+        <div>
+            <div class="block">
+                <header>Technical characteristics</header>
+                <ol class="list-plain">
+                    <li class="param">
+                        <span class="param-name">aperture speed</span>
+                        <span class="param-value">${requirements.apertureSpeed}</span>
+                    </li>
+                    <li class="param">
+                        <span class="param-name">angular field</span>
+                        <span class="param-value">${requirements.angularField}</span>
+                    </li>
+                    <li class="param">
+                        <span class="param-name">focal length</span>
+                        <span class="param-value">${requirements.focalLength}</span>
+                    </li>
+                    <li class="param">
+                        <span class="param-name">back focal distance</span>
+                        <span class="param-value">${requirements.backFocalDistance}</span>
+                    </li>
+                    <li class="param">
+                        <span class="param-name">image quality</span>
+                        <span class="param-value">${requirements.imageQuality}</span>
+                    </li>
+                    <li class="param">
+                        <span class="param-name">entrance pupil pos.</span>
+                        <span class="param-value">${requirements.entrancePupilPosition}</span>
+                    </li>
+                    <li class="param">
+                        <span class="param-name">spectral range</span>
+                        <span class="param-value">${requirements.waveLengths[1]}-${requirements.waveLengths[0]}</span>
+                    </li>
+                </ol>
+            </div>
+            <div class="block">
+                <header>General characteristics</header>
+                <p class="class-name">J - </p><span id="class-J" class="class-label">${classification.j}</span>
+                <p class="class-name">W - </p><span id="class-W" class="class-label">${classification.w}</span>
+                <p class="class-name">F - </p><span id="class-F" class="class-label">${classification.f}</span>
+                <p class="class-name">L - </p><span id="class-L" class="class-label">${classification.l}</span>
+                <p class="class-name">Q - </p><span id="class-Q" class="class-label">${classification.q}</span>
+                <p class="class-name">S - </p><span id="class-S" class="class-label">${classification.s}</span>
+                <p class="class-name">D - </p><span id="class-D" class="class-label">${classification.d}</span>
+                <p class="class-name">R - </p><span id="class-R" class="class-label">${classification.r}</span>
+            </div>
+        </div>
+        <div id="scheme-area" class="block">
+            <header>Structural schemes</header>
+        </div>
+        <!--<div class="scheme-list">-->
+        #{list items:schemes, as:'schema'}
+        <div class="scheme" data-scheme-index="${schema_index}">
+            <div>
+                <p class="scheme-number">#${schema_index}</p>
+            </div>
+            <div id="scheme_${schema_index}" class="scheme-image">
+            </div>
+            <div class="scheme-code">${schema}</div>
+        </div>
+        #{/list}
+        <!--</div>-->
+    </body>
+</html>
